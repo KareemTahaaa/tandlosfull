@@ -3,6 +3,10 @@
     flex-direction: column;
     cursor: pointer;
     transition: transform 0.2s;
+    width: 100%;
+    max-width: 350px;
+    /* Further protection against stretching */
+    margin: 0 auto;
 }
 
 .card:hover .imageWrapper img {

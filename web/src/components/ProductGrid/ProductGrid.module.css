@@ -1,8 +1,12 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px 15px;
+    gap: 30px 20px;
     width: 100%;
+    max-width: 800px;
+    /* Constrain width to keep cards small */
+    margin: 0 auto;
+    /* Center the grid */
 }
 
 @media (max-width: 768px) {
