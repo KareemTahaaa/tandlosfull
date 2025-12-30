@@ -45,11 +45,7 @@ export default function ShopPage() {
 
     return (
         <div className={`container section ${styles.page}`}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>All Products</h1>
-                <p className={styles.subtitle}>Browse our complete collection of premium streetwear.</p>
-            </div>
-
+            <div className={styles.spacer} />
             <ProductGrid>
                 {products.map(product => (
                     <ProductCard

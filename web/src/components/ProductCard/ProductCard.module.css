@@ -12,10 +12,10 @@
 .imageWrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1.2;
+    aspect-ratio: 1 / 1.1;
     overflow: hidden;
     background-color: #f4f4f4;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .image {
@@ -30,15 +30,17 @@
 }
 
 .title {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 600;
     text-transform: uppercase;
     color: var(--color-black);
+    letter-spacing: 0.05em;
 }
 
 .price {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #666;
 }
 
 .badge {

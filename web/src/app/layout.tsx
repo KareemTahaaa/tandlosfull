@@ -53,11 +53,11 @@ export default function RootLayout({
               The user said "landing screen is not available", implying they want ONLY the landing screen.
           */}
 
-          {/* <Navbar /> */}
-          <main style={{ minHeight: '100vh', padding: 0 }}>
+          <Navbar />
+          <main style={{ minHeight: '100vh', paddingTop: '80px' }}>
             {children}
           </main>
-          {/* <Footer /> */}
+          <Footer />
         </CartProvider>
       </body>
     </html>
