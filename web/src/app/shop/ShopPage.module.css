@@ -2,24 +2,6 @@
     min-height: 100vh;
     padding-top: 40px;
     /* Section utility already provides 80px, total 120px */
-    padding-bottom: 80px;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 60px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #333;
-}
-
-.title {
-    font-family: var(--font-family-heading);
-    text-transform: uppercase;
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-
-.subtitle {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
+    padding-bottom: 250px;
+    /* Increased padding to create a large gap before the footer */
 }
