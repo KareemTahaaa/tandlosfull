@@ -54,7 +54,7 @@ export default function RootLayout({
           */}
 
           <Navbar />
-          <main style={{ minHeight: '100vh', paddingTop: '80px' }}>
+          <main style={{ minHeight: '100vh' }}>
             {children}
           </main>
           <Footer />

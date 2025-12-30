@@ -1,5 +1,8 @@
 .page {
-    min-height: 80vh;
+    min-height: 100vh;
+    padding-top: 40px;
+    /* Section utility already provides 80px, total 120px */
+    padding-bottom: 80px;
 }
 
 .header {
