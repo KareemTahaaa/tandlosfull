@@ -1,0 +1,202 @@
+"use client";
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useParams, useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
+import dynamic from 'next/dynamic';
+import styles from './ProductPage.module.css';
+
+const VirtualTryOn = dynamic(
+    () => import('@/components/VirtualTryOn/VirtualTryOn'),
+    { ssr: false }
+);
+
+interface Product {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+    image: string;
+    stocks: { size: string; quantity: number }[];
+}
+
+const SIZES = ['S', 'M', 'L', 'XL'];
+
+export default function ProductPage() {
+    const params = useParams();
+    const router = useRouter();
+    const { addToCart } = useCart();
+
+    // State
+    const [product, setProduct] = useState<Product | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [selectedSize, setSelectedSize] = useState<string | null>(null);
+    const [showSizeError, setShowSizeError] = useState(false);
+    const [showTryOn, setShowTryOn] = useState(false);
+
+    const id = params.id as string;
+
+    useEffect(() => {
+        async function fetchProduct() {
+            try {
+                const res = await fetch(`/api/products/${id}`);
+                if (!res.ok) {
+                    setLoading(false);
+                    return;
+                };
+                const data = await res.json();
+                setProduct(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        if (id) fetchProduct();
+    }, [id]);
+
+    if (loading) {
+        return <div className="container section">Loading...</div>;
+    }
+
+    if (!product) {
+        return <div className="container section">Product not found</div>;
+    }
+
+    const validateSize = () => {
+        if (!selectedSize) {
+            setShowSizeError(true);
+            return false;
+        }
+        setShowSizeError(false);
+        return true;
+    };
+
+    const handleAddToCart = () => {
+        if (!validateSize()) return;
+
+        addToCart({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            size: selectedSize!
+        });
+
+        alert('Added to cart');
+    };
+
+    const getStockForSize = (size: string | null) => {
+        if (!size || !product) return 0;
+        const stockEntry = product.stocks.find(s => s.size === size);
+        return stockEntry ? stockEntry.quantity : 0;
+    };
+
+    const inStock = selectedSize ? getStockForSize(selectedSize) > 0 : product.stocks.some(s => s.quantity > 0);
+    const stockQuantity = selectedSize ? getStockForSize(selectedSize) : 0;
+
+    return (
+        <div className={`container ${styles.productPage}`}>
+            <div className={styles.gallery}>
+                <div className={styles.mainImage}>
+                    <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        className={styles.image}
+                        style={{ objectFit: 'cover' }}
+                        priority
+                    />
+                </div>
+            </div>
+
+            <div className={styles.details}>
+                <h1 className={styles.title}>{product.title}</h1>
+                <p className={styles.price}>{product.price.toLocaleString()} EGP</p>
+
+                <div className={styles.section}>
+                    <p className={styles.label}>Description</p>
+                    <p className={styles.description}>{product.description}</p>
+                    <p className={styles.description} style={{ marginTop: '10px', color: inStock ? '#4CAF50' : '#f44336' }}>
+                        {selectedSize
+                            ? (inStock ? 'In Stock' : 'Out of Stock')
+                            : (inStock ? 'Select a size to see availability' : 'Out of Stock')
+                        }
+                    </p>
+                </div>
+
+                <div className={styles.section}>
+                    <p className={styles.label}>Select Size</p>
+                    <div className={styles.sizes}>
+                        {SIZES.map(size => {
+                            const sizeStock = getStockForSize(size);
+                            const isAvailable = sizeStock > 0;
+                            return (
+                                <button
+                                    key={size}
+                                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.active : ''} ${showSizeError ? styles.error : ''}`}
+                                    onClick={() => {
+                                        setSelectedSize(size);
+                                        setShowSizeError(false);
+                                    }}
+                                    disabled={!isAvailable}
+                                    style={{ opacity: isAvailable ? 1 : 0.5, cursor: isAvailable ? 'pointer' : 'not-allowed' }}
+                                >
+                                    {size}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {showSizeError && <p className={styles.errorMessage}>Please select a size to continue</p>}
+                </div>
+
+                <div className={styles.buttonGroup}>
+                    <button
+                        className={styles.tryOnBtn}
+                        onClick={() => setShowTryOn(true)}
+                    >
+                        👕 Try It On
+                    </button>
+                    <button
+                        className={styles.addToCartBtn}
+                        onClick={handleAddToCart}
+                        disabled={!selectedSize || !inStock}
+                        style={{ opacity: (selectedSize && inStock) ? 1 : 0.5, cursor: (selectedSize && inStock) ? 'pointer' : 'not-allowed' }}
+                    >
+                        {selectedSize ? (inStock ? 'Add to Cart' : 'Sold Out') : 'Select Size'}
+                    </button>
+                </div>
+                <button
+                    className={styles.buyNowBtn}
+                    onClick={() => {
+                        if (!validateSize()) return;
+
+                        addToCart({
+                            id: product.id,
+                            title: product.title,
+                            price: product.price,
+                            image: product.image,
+                            size: selectedSize!
+                        });
+                        router.push('/checkout');
+                    }}
+                    disabled={!selectedSize || !inStock}
+                    style={{ opacity: (selectedSize && inStock) ? 1 : 0.5, cursor: (selectedSize && inStock) ? 'pointer' : 'not-allowed' }}
+                >
+                    Buy Now
+                </button>
+
+                {showTryOn && (
+                    <VirtualTryOn
+                        productImage={product.image}
+                        productTitle={product.title}
+                        availableSizes={product.stocks.filter(s => s.quantity > 0).map(s => s.size)}
+                        onClose={() => setShowTryOn(false)}
+                    />
+                )}
+            </div>
+        </div>
+    );
+}

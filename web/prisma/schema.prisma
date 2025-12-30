@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  title       String
+  description String?
+  price       Int
+  image       String
+
+  // stock       Int // REMOVED: Now using ProductStock model
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  stocks      ProductStock[]
+}
+
+model ProductStock {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  productTitle String @default("") // Snapshot for easier DB viewing
+  size      String
+  quantity  Int
+
+  @@unique([productId, size])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  address   String?
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  customer   Customer    @relation(fields: [customerId], references: [id])
+  customerId String
+  total      Int
+  status     String      @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  orderNumber Int        @default(autoincrement())
+  items      Json        // Merged OrderItem: Array of { productId, title, price, quantity, size }
+  // Snapshot of Shipping Details for this specific order
+  shippingName        String? // To store "FirstName LastName"
+  shippingPhone       String?
+  shippingAddress     String?
+  shippingCity        String?
+  shippingGovernorate String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+// REMOVED: OrderItem model merged into Order.items column
+

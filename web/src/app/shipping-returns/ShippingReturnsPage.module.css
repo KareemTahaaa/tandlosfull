@@ -1,0 +1,211 @@
+.page {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-family: var(--font-family-heading);
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.content {
+    padding: 0 20px;
+}
+
+.section {
+    margin-bottom: 60px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.icon {
+    font-size: 2.5rem;
+}
+
+.sectionHeader h2 {
+    font-family: var(--font-family-heading);
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.card {
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    font-family: var(--font-family-heading);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+}
+
+.card p {
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.highlight {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.important {
+    border: 2px solid #ff6b6b;
+    background: rgba(255, 107, 107, 0.05);
+}
+
+.important h3 {
+    color: #ff6b6b;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+}
+
+.list li {
+    padding: 12px 0 12px 32px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.list li strong {
+    color: var(--text-primary);
+}
+
+.orderedList {
+    padding-left: 24px;
+    margin: 16px 0;
+}
+
+.orderedList li {
+    padding: 8px 0;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.orderedList a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.orderedList a:hover {
+    text-decoration: underline;
+}
+
+.tipsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.tip {
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.tip h4 {
+    font-size: 1.1rem;
+    margin: 0 0 12px 0;
+}
+
+.tip p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.contact {
+    text-align: center;
+    padding: 48px 32px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #000 100%);
+    color: white;
+    border-radius: 16px;
+    margin-top: 60px;
+}
+
+.contact h2 {
+    color: white;
+    font-family: var(--font-family-heading);
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+}
+
+.contact p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 24px 0;
+}
+
+.emailButton {
+    display: inline-block;
+    padding: 16px 32px;
+    background: white;
+    color: var(--color-primary);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.emailButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .sectionHeader h2 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    .tipsGrid {
+        grid-template-columns: 1fr;
+    }
+}

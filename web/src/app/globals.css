@@ -1,0 +1,61 @@
+/* Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Color Palette - Streetwear Aesthetic */
+  --color-black: #050505;
+  --color-white: #ffffff;
+  --color-grey-dark: #121212;
+  --color-grey-medium: #888888;
+  --color-grey-light: #f4f4f4;
+  --color-accent: #e6e6e6; /* Subtle accent/highlight */
+
+  /* Semantics */
+  --bg-primary: var(--color-black);
+  --bg-secondary: var(--color-grey-dark);
+  --text-primary: var(--color-white);
+  --text-secondary: var(--color-grey-medium);
+  --border-color: #333333;
+
+  /* Typography */
+  --font-family-sans: var(--font-outfit), sans-serif;
+  --font-family-heading: var(--font-oswald), sans-serif;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Utilities */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 80px 0;
+}

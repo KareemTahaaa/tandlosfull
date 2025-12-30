@@ -1,0 +1,115 @@
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
+    border-radius: 16px;
+}
+
+.title {
+    font-family: var(--font-family-heading);
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin: 0 0 16px 0;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.content {
+    padding: 0 20px;
+}
+
+.section {
+    margin-bottom: 48px;
+}
+
+.section h2 {
+    font-family: var(--font-family-heading);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
+}
+
+.section p {
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+}
+
+.list li:last-child {
+    border-bottom: none;
+}
+
+.list strong {
+    color: var(--text-primary);
+}
+
+.contact {
+    text-align: center;
+    padding: 40px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 16px;
+}
+
+.contact h2 {
+    color: white;
+    margin-bottom: 16px;
+}
+
+.contact p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.email {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 32px;
+    background: white;
+    color: var(--color-primary);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.email:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+    }
+}
