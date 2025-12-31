@@ -28,7 +28,7 @@ export default function ShippingReturnsPage() {
                     <div className={styles.card}>
                         <h3>Tracking Your Order</h3>
                         <p>
-                            Once your order ships, you'll receive a confirmation email with tracking information.
+                            Once your order ships, you&apos;ll receive a confirmation email with tracking information.
                             You can monitor your delivery status in real-time.
                         </p>
                     </div>
@@ -58,7 +58,7 @@ export default function ShippingReturnsPage() {
                         <ul className={styles.list}>
                             <li><strong>Wrong item:</strong> You received a different product than ordered</li>
                             <li><strong>Damaged item:</strong> The product arrived damaged or defective</li>
-                            <li><strong>Wrong size:</strong> The size doesn't match your order</li>
+                            <li><strong>Wrong size:</strong> The size doesn&apos;t match your order</li>
                             <li><strong>Quality issues:</strong> The item has manufacturing defects</li>
                         </ul>
                     </div>
@@ -70,7 +70,7 @@ export default function ShippingReturnsPage() {
                             <li>If there's an issue, inform the courier immediately</li>
                             <li>The courier will take the item back</li>
                             <li>Contact us at <a href="mailto:tandlos.eg@gmail.com">tandlos.eg@gmail.com</a></li>
-                            <li>We'll process your refund or send a replacement</li>
+                            <li>We&apos;ll process your refund or send a replacement</li>
                         </ol>
                     </div>
                 </section>
@@ -103,7 +103,7 @@ export default function ShippingReturnsPage() {
 
                 <div className={styles.contact}>
                     <h2>Need Help?</h2>
-                    <p>If you have any questions about shipping or returns, we're here to help.</p>
+                    <p>If you have any questions about shipping or returns, we&apos;re here to help.</p>
                     <a href="mailto:tandlos.eg@gmail.com" className={styles.emailButton}>
                         Contact Us: tandlos.eg@gmail.com
                     </a>

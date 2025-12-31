@@ -3,7 +3,7 @@
  * Environment: Staging
  */
 
-const BASE_URL = process.env.SHIPBLU_BASE_URL || 'https://api.staging.shipblu.com/api/v1';
+const BASE_URL = process.env.SHIPBLU_BASE_URL || 'https://api.shipblu.com/api/v1';
 const API_KEY = process.env.SHIPBLU_API_KEY;
 
 async function shipbluFetch(endpoint: string, options: RequestInit = {}) {
@@ -20,8 +20,15 @@ async function shipbluFetch(endpoint: string, options: RequestInit = {}) {
 
     if (!res.ok) {
         const text = await res.text();
-        console.error(`ShipBlu API Error (${res.status}):`, text);
-        throw new Error(`ShipBlu API error: ${res.statusText}`);
+        let errorMessage = `ShipBlu API error: ${res.statusText}`;
+        try {
+            const parsed = JSON.parse(text);
+            errorMessage = `ShipBlu API Error (${res.status}): ${parsed.detail || JSON.stringify(parsed)}`;
+        } catch (e) {
+            errorMessage = `ShipBlu API Error (${res.status}): ${text}`;
+        }
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     }
 
     if (res.status === 204) return null;
@@ -41,7 +48,7 @@ export const ShipBluService = {
         return shipbluFetch(`/cities/${cityId}/zones/`);
     },
 
-    async createDeliveryOrder(data: any) {
+    async createDeliveryOrder(data: Record<string, unknown>) {
         return shipbluFetch('/delivery-orders/', {
             method: 'POST',
             body: JSON.stringify(data),

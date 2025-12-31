@@ -7,7 +7,7 @@ const Hero = () => {
             <div className={styles.backgroundOverlay} />
             <div className={styles.content}>
                 <h1 className={styles.headline}>
-                    What you are looking for isn't out there,<br />It's in here.
+                    What you are looking for isn&apos;t out there,<br />It&apos;s in here.
                 </h1>
                 <p className={styles.subheadline}>
                     Discover the new collection defined by comfort and authenticity.

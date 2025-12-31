@@ -10,24 +10,14 @@ interface VirtualTryOnProps {
     onClose: () => void;
 }
 
-export default function VirtualTryOn({ productImage, productTitle, availableSizes, onClose }: VirtualTryOnProps) {
+export default function VirtualTryOn({ productTitle, onClose }: Omit<VirtualTryOnProps, 'productImage' | 'availableSizes'>) {
     const [userPhoto, setUserPhoto] = useState<string | null>(null);
     const [showDemo, setShowDemo] = useState(false);
     const [email, setEmail] = useState('');
     const [emailSubmitted, setEmailSubmitted] = useState(false);
-    const [selectedSize, setSelectedSize] = useState(availableSizes[0] || 'M');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setUserPhoto(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    // handlePhotoUpload and other state preserved if needed for future, but removing to pass lint
 
     const handleDemoClick = () => {
         setShowDemo(true);
@@ -68,7 +58,7 @@ export default function VirtualTryOn({ productImage, productTitle, availableSize
 
                         <div className={styles.instructions}>
                             <h3>📸 See Yourself in Our Clothes</h3>
-                            <p>We're launching an amazing AI-powered virtual try-on feature that will let you:</p>
+                            <p>We&apos;re launching an amazing AI-powered virtual try-on feature that will let you:</p>
                             <ul>
                                 <li>Upload your photo and see how our clothes look on you</li>
                                 <li>Try different sizes instantly</li>
@@ -104,7 +94,7 @@ export default function VirtualTryOn({ productImage, productTitle, availableSize
                         ) : (
                             <div className={styles.successMessage}>
                                 <span className={styles.checkIcon}>✓</span>
-                                <p>Thanks! We'll notify you when virtual try-on launches.</p>
+                                <p>Thanks! We&apos;ll notify you when virtual try-on launches.</p>
                             </div>
                         )}
                     </div>
@@ -133,7 +123,7 @@ export default function VirtualTryOn({ productImage, productTitle, availableSize
                         </div>
 
                         <div className={styles.demoFeatures}>
-                            <h4>Features you'll get:</h4>
+                            <h4>Features you&apos;ll get:</h4>
                             <div className={styles.featureGrid}>
                                 <div className={styles.feature}>
                                     <span>🎯</span>

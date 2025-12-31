@@ -12,7 +12,8 @@ export async function GET(request: Request) {
     try {
         const data = await ShipBluService.getZones(parseInt(cityId));
         return NextResponse.json(data);
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error: unknown) {
+        const err = error as Error;
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }

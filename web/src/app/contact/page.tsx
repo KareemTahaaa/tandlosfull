@@ -5,7 +5,7 @@ export default function ContactPage() {
         <div className={`container section ${styles.page}`}>
             <div className={styles.hero}>
                 <h1 className={styles.title}>Contact Us</h1>
-                <p className={styles.subtitle}>We're here to help</p>
+                <p className={styles.subtitle}>We&apos;re here to help</p>
             </div>
 
             <div className={styles.content}>
@@ -43,7 +43,7 @@ export default function ContactPage() {
                         </div>
                         <div className={styles.topic}>
                             <h4>↩️ Returns & Exchanges</h4>
-                            <p>Need to return or exchange an item? We're here to help</p>
+                            <p>Need to return or exchange an item? We&apos;re here to help</p>
                         </div>
                         <div className={styles.topic}>
                             <h4>👕 Product Information</h4>

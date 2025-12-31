@@ -201,8 +201,8 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
-                            {isSubmitting ? 'Processing...' : 'Place Order'}
+                        <button type="submit" className={styles.submitBtn} disabled={isSubmitting || !selectedZone}>
+                            {isSubmitting ? 'Processing...' : (!selectedZone ? 'Select Shipping Zone' : 'Place Order')}
                         </button>
                     </form>
                 </div>

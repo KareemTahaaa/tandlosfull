@@ -10,7 +10,7 @@ export default function WaitingList() {
             <div className="content-wrapper">
                 <div className="center-content">
                     <h1 className="main-title">TANDLOS</h1>
-                    <p className="sub-title">WHAT YOU ARE SEARCHING FOR ISN'T OUT THERE IT'S IN HERE </p>
+                    <p className="sub-title">WHAT YOU ARE SEARCHING FOR ISN&apos;T OUT THERE IT&apos;S IN HERE </p>
 
                     <Link href="/shop" className="shop-button">
                         SHOP NOW

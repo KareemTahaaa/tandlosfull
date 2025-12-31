@@ -214,9 +214,7 @@ export default function ProductPage() {
 
                 {showTryOn && (
                     <VirtualTryOn
-                        productImage={product.image}
                         productTitle={product.title}
-                        availableSizes={product.stocks.filter(s => s.quantity > 0).map(s => s.size)}
                         onClose={() => setShowTryOn(false)}
                     />
                 )}

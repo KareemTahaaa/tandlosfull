@@ -61,7 +61,7 @@ export async function POST(request: Request) {
                     shippingCity: shipping.city,
                     shippingGovernorate: shipping.governorate,
                     // Items as JSON array
-                    items: items.map((item: any) => ({
+                    items: (items as any[]).map((item) => ({
                         productId: item.id,
                         title: item.title,
                         price: item.price,
@@ -90,9 +90,15 @@ export async function POST(request: Request) {
 
         // 5. Create Shipment (Outside transaction to avoid blocking DB or rolling back on API error)
         let shipment = null;
+        let shipmentError = null;
+
+        console.log("Creating shipment with zoneId:", zoneId);
+        console.log("SHIPBLU_API_KEY present:", !!process.env.SHIPBLU_API_KEY);
+
         try {
             shipment = await createShipment({
                 orderId: order.id,
+                orderNumber: order.orderNumber,
                 items: items,
                 total: total,
                 zoneId: zoneId
@@ -105,17 +111,26 @@ export async function POST(request: Request) {
                 city: shipping.city,
                 governorate: shipping.governorate
             });
-        } catch (shippingError) {
-            console.error("Failed to create shipment:", shippingError);
-            // We don't fail the order if shipping fails, just log it.
+        } catch (err: unknown) {
+            const error = err as Error;
+            console.error("Failed to create shipment:", error);
+            shipmentError = error.message || "Unknown shipping error";
+            // We don't fail the order if shipping fails, but we want to know why.
         }
 
-        return NextResponse.json({ success: true, orderId: order.id, orderNumber: order.orderNumber, shipment });
+        return NextResponse.json({
+            success: true,
+            orderId: order.id,
+            orderNumber: order.orderNumber,
+            shipment,
+            shipmentError
+        });
 
-    } catch (error: any) {
-        console.error('Checkout error:', error);
+    } catch (error: unknown) {
+        const err = error as Error;
+        console.error('Checkout error:', err);
         return NextResponse.json(
-            { success: false, error: error.message || 'Checkout failed' },
+            { success: false, error: err.message || 'Checkout failed' },
             { status: 500 }
         );
     }

@@ -1,16 +1,33 @@
 import { ShipBluService } from './shipblu';
 
-export async function createShipment(orderData: any, customerData: any) {
+interface OrderData {
+    orderId: string;
+    orderNumber: number;
+    items: any[];
+    total: number;
+    zoneId: number;
+}
+
+interface CustomerData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    governorate: string;
+}
+
+export async function createShipment(orderData: OrderData, customerData: CustomerData) {
     console.log('ShipBlu createShipment called with:', orderData, customerData);
 
     // Map Tandlos data to ShipBlu schema
-    // Reference: ShipBlu DeliveryOrder creation
     const shipbluOrder = {
         customer: {
             address: {
                 line_1: customerData.address,
                 line_2: "", // Optional
-                zone: orderData.zoneId // We'll pass this from the frontend
+                zone: orderData.zoneId
             },
             phone: customerData.phone,
             full_name: `${customerData.firstName} ${customerData.lastName}`,
@@ -22,9 +39,13 @@ export async function createShipment(orderData: any, customerData: any) {
             fragile: false
         })),
         cash_amount: orderData.total, // Total including shipping
-        merchant_order_reference: orderData.orderId.toString(),
+        merchant_order_reference: orderData.orderNumber.toString(), // Convert number to string for ShipBlu
         notes: "Tandlos Web Order"
     };
+
+    if (!orderData.zoneId || isNaN(orderData.zoneId)) {
+        throw new Error("Invalid or missing shipping Zone ID. Please select a valid zone.");
+    }
 
     try {
         const result = await ShipBluService.createDeliveryOrder(shipbluOrder);

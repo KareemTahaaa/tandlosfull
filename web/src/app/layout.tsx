@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Outfit, Oswald } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/components/Navbar/Navbar';
-import Footer from '@/components/Footer/Footer';
 import { CartProvider } from '@/context/CartContext';
 import { NotificationProvider } from '@/context/NotificationContext';
 import GoogleAnalytics from '@/components/GoogleAnalytics';

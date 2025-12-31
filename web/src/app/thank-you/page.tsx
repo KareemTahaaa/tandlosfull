@@ -2,17 +2,14 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import { FiCheckCircle } from 'react-icons/fi';
 
 // Separate component to use useSearchParams inside Suspense
 function ThankYouContent() {
     const searchParams = useSearchParams();
-    const router = useRouter();
-
     // Get params
     const orderNumber = searchParams.get('orderNumber');
-    const orderId = searchParams.get('orderId');
 
     // Simple protection: if no params, maybe redirect home or show basic message
     // but for now, we just display what we have.
@@ -51,7 +48,7 @@ function ThankYouContent() {
             </div>
 
             <p style={{ maxWidth: '600px', lineHeight: '1.6', color: '#888' }}>
-                We've received your order and are working on it.
+                We&apos;ve received your order and are working on it.
                 You will receive an email confirmation shortly.
             </p>
 

@@ -5,7 +5,7 @@ declare global {
         gtag: (
             command: 'config' | 'event' | 'js' | 'set',
             targetId: string | Date,
-            config?: Record<string, any>
+            config?: Record<string, unknown>
         ) => void;
     }
 }
@@ -41,7 +41,7 @@ export const event = ({
 };
 
 // Track email signup
-export const trackEmailSignup = (email: string) => {
+export const trackEmailSignup = () => {
     event({
         action: 'signup',
         category: 'engagement',
