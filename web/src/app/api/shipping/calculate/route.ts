@@ -26,7 +26,7 @@ export async function POST(request: Request) {
             body: JSON.stringify({
                 to_governorate: parseInt(governorateId),
                 cash_amount: cashAmount,
-                packages: [weight],
+                packages: [1], // Use Size ID 1 (Small) instead of weight
                 declared_value: cashAmount,
                 is_customer_allowed_to_open_packages: true
             }),
