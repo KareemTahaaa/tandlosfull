@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model Product {
@@ -13,9 +12,9 @@ model Product {
   title       String
   description String?
   price       Int
-  image       String
+  image       String      // Primary image/thumbnail
+  images      String[]    // Array of all images (front, back, etc.)
 
-  // stock       Int // REMOVED: Now using ProductStock model
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   stocks      ProductStock[]

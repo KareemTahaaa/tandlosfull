@@ -6,7 +6,8 @@ const PRODUCTS = [
         title: 'Cascade Heavyweight Hoodie',
         description: 'The Cascade Hoodie is crafted from premium heavyweight cotton for ultimate comfort and durability. Featuring a relaxed fit, drop shoulders, and our signature puff print logo.',
         price: 2100,
-        image: '/black-back.png',
+        image: '/black-front.png',
+        images: ['/black-front.png', '/black-back.png'],
         stock: 50,
     },
     {

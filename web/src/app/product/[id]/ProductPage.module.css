@@ -14,9 +14,41 @@
 .mainImage {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4;
-    background-color: #f4f4f4;
+    aspect-ratio: 1/1;
+    /* Square aspect ratio to match shop grid */
+    background-color: transparent;
+    /* Removed white box */
     overflow: hidden;
+}
+
+.image {
+    object-fit: contain;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.thumbnail {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    border: 1px solid #333;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.thumbnail.activeThumbnail {
+    border-color: var(--color-white);
+}
+
+.thumbnailImg {
+    object-fit: contain;
 }
 
 .details {

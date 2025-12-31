@@ -7,10 +7,13 @@ interface ProductCardProps {
     title: string;
     price: number;
     image: string;
+    images?: string[];
     badge?: string;
 }
 
-const ProductCard = ({ id, title, price, image, badge }: ProductCardProps) => {
+const ProductCard = ({ id, title, price, image, images, badge }: ProductCardProps) => {
+    const hasMultipleImages = images && images.length > 1;
+
     return (
         <Link href={`/product/${id}`} className={styles.card}>
             <div className={styles.imageWrapper}>
@@ -19,9 +22,18 @@ const ProductCard = ({ id, title, price, image, badge }: ProductCardProps) => {
                     src={image}
                     alt={title}
                     fill
-                    className={styles.image}
+                    className={`${styles.image} ${hasMultipleImages ? styles.frontImage : ''}`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
+                {hasMultipleImages && (
+                    <Image
+                        src={images[1]}
+                        alt={`${title} back`}
+                        fill
+                        className={`${styles.image} ${styles.backImage}`}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                )}
             </div>
             <div className={styles.info}>
                 <h3 className={styles.title}>{title}</h3>

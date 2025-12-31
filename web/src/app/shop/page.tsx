@@ -10,6 +10,7 @@ interface Product {
     title: string;
     price: number;
     image: string;
+    images: string[];
     stock: number;
 }
 
@@ -53,6 +54,7 @@ export default function ShopPage() {
                         title={product.title}
                         price={product.price}
                         image={product.image}
+                        images={product.images}
                     />
                 ))}
             </ProductGrid>

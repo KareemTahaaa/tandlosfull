@@ -18,6 +18,7 @@ interface Product {
     description: string;
     price: number;
     image: string;
+    images: string[];
     stocks: { size: string; quantity: number }[];
 }
 
@@ -34,6 +35,7 @@ export default function ProductPage() {
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [showSizeError, setShowSizeError] = useState(false);
     const [showTryOn, setShowTryOn] = useState(false);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
 
     const id = params.id as string;
 
@@ -65,6 +67,10 @@ export default function ProductPage() {
         return <div className="container section">Product not found</div>;
     }
 
+    const galleryImages = product.images && product.images.length > 0
+        ? product.images
+        : [product.image];
+
     const validateSize = () => {
         if (!selectedSize) {
             setShowSizeError(true);
@@ -95,21 +101,37 @@ export default function ProductPage() {
     };
 
     const inStock = selectedSize ? getStockForSize(selectedSize) > 0 : product.stocks.some(s => s.quantity > 0);
-    const stockQuantity = selectedSize ? getStockForSize(selectedSize) : 0;
 
     return (
         <div className={`container ${styles.productPage}`}>
             <div className={styles.gallery}>
                 <div className={styles.mainImage}>
                     <Image
-                        src={product.image}
+                        src={galleryImages[activeImageIndex]}
                         alt={product.title}
                         fill
                         className={styles.image}
-                        style={{ objectFit: 'cover' }}
                         priority
                     />
                 </div>
+                {galleryImages.length > 1 && (
+                    <div className={styles.thumbnails}>
+                        {galleryImages.map((img, idx) => (
+                            <button
+                                key={idx}
+                                className={`${styles.thumbnail} ${activeImageIndex === idx ? styles.activeThumbnail : ''}`}
+                                onClick={() => setActiveImageIndex(idx)}
+                            >
+                                <Image
+                                    src={img}
+                                    alt={`${product.title} view ${idx + 1}`}
+                                    fill
+                                    className={styles.thumbnailImg}
+                                />
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
 
             <div className={styles.details}>
