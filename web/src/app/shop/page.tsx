@@ -45,7 +45,7 @@ export default function ShopPage() {
     }
 
     return (
-        <div className={`container section ${styles.page}`}>
+        <div className={`container ${styles.page}`}>
             <ProductGrid>
                 {products.map(product => (
                     <ProductCard
