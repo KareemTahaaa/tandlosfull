@@ -209,7 +209,15 @@ export default function CheckoutPage() {
                                 <input name="postalCode" type="text" placeholder="Postal Code" className={styles.input} />
                             </div>
                             {geoError && <p className={styles.errorMessage} style={{ color: '#f44336', fontSize: '0.8rem', marginTop: '10px' }}>{geoError}</p>}
-                            <input name="phone" type="tel" placeholder="Phone" required className={styles.input} />
+                            <input
+                                name="phone"
+                                type="tel"
+                                placeholder="Phone (e.g., 01xxxxxxxxx)"
+                                required
+                                className={styles.input}
+                                pattern="^(01|\+201|00201|201)[0-9]+$"
+                                title="Phone number must start with 01, +201, 00201, or 201"
+                            />
                         </div>
 
                         <div className={styles.section}>
