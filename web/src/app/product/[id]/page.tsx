@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useNotification } from '@/context/NotificationContext';
 import dynamic from 'next/dynamic';
 import styles from './ProductPage.module.css';
 
@@ -28,6 +29,7 @@ export default function ProductPage() {
     const params = useParams();
     const router = useRouter();
     const { addToCart } = useCart();
+    const { showNotification } = useNotification();
 
     // State
     const [product, setProduct] = useState<Product | null>(null);
@@ -91,7 +93,7 @@ export default function ProductPage() {
             size: selectedSize!
         });
 
-        alert('Added to cart');
+        showNotification('Added to cart', 'success');
     };
 
     const getStockForSize = (size: string | null) => {

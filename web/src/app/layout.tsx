@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import { CartProvider } from '@/context/CartContext';
+import { NotificationProvider } from '@/context/NotificationContext';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const outfit = Outfit({
@@ -34,11 +35,13 @@ export default function RootLayout({
     <html lang="en" className={`${outfit.variable} ${oswald.variable}`} suppressHydrationWarning>
       <body>
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
-        <CartProvider>
-          <NavigationWrapper>
-            {children}
-          </NavigationWrapper>
-        </CartProvider>
+        <NotificationProvider>
+          <CartProvider>
+            <NavigationWrapper>
+              {children}
+            </NavigationWrapper>
+          </CartProvider>
+        </NotificationProvider>
       </body>
     </html>
   );
