@@ -1,7 +1,6 @@
 .page {
     min-height: 100vh;
-    padding-top: 40px;
-    /* Section utility already provides 80px, total 120px */
+    padding-top: 100px;
+    /* Increased space from header */
     padding-bottom: 250px;
-    /* Increased padding to create a large gap before the footer */
 }

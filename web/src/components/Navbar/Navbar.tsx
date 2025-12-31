@@ -11,8 +11,7 @@ const Navbar = () => {
 
     return (
         <nav className={styles.navbar}>
-            <div className={styles.actions}>
-                {/* Mobile Menu Icon (Visible only on mobile via CSS usually, but here simple for now) */}
+            <div className={styles.leftActions}>
                 <button className={styles.iconBtn} aria-label="Menu">
                     <FiMenu />
                 </button>
@@ -28,14 +27,7 @@ const Navbar = () => {
                 />
             </Link>
 
-            <div className={styles.navLinks}>
-                <Link href="/shop" className={styles.navLink}>Shop All</Link>
-                <Link href="/collections" className={styles.navLink}>Collections</Link>
-
-
-            </div>
-
-            <div className={styles.actions}>
+            <div className={styles.rightActions}>
                 <button className={styles.iconBtn} aria-label="Search">
                     <FiSearch />
                 </button>

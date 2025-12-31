@@ -3,8 +3,8 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 30px 20px;
     width: 100%;
-    max-width: 800px;
-    /* Constrain width to keep cards small */
+    max-width: 600px;
+    /* Shrunk further to make cards very small */
     margin: 0 auto;
     /* Center the grid */
 }
