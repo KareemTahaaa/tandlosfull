@@ -26,14 +26,15 @@ export async function createShipment(orderData: OrderData, customerData: Custome
         customer: {
             address: {
                 line_1: customerData.address,
-                line_2: "", // Optional
-                zone: orderData.zoneId
+                line_2: customerData.city || "N/A", // Mandatory in API, min length 1
+                zone: orderData.zoneId,
+                what3words: "///placeholder.placeholder.placeholder" // Marked as required in some API versions
             },
             phone: customerData.phone,
             full_name: `${customerData.firstName} ${customerData.lastName}`,
             email: customerData.email,
         },
-        packages: orderData.items.map((item: any) => ({
+        packages: (orderData.items || []).map((item: any) => ({
             package_size: 1, // Defaulting to Small (1)
             description: `${item.title} (Size: ${item.size})`,
             fragile: false

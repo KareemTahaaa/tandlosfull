@@ -114,8 +114,11 @@ export async function POST(request: Request) {
         } catch (err: unknown) {
             const error = err as Error;
             console.error("Failed to create shipment:", error);
-            shipmentError = error.message || "Unknown shipping error";
-            // We don't fail the order if shipping fails, but we want to know why.
+            // NOW WE FAIL THE REQUEST so the user knows ShipBlu sync failed
+            return NextResponse.json(
+                { success: false, error: `Order saved but ShipBlu sync failed: ${error.message}` },
+                { status: 500 }
+            );
         }
 
         return NextResponse.json({
