@@ -24,17 +24,6 @@ export default function ShippingReturnsPage() {
                         </p>
                     </div>
 
-                    <div className={styles.card}>
-                        <h3>Shipping Coverage</h3>
-                        <p>We currently ship to all governorates across Egypt, including:</p>
-                        <ul className={styles.list}>
-                            <li>Cairo & Giza</li>
-                            <li>Alexandria</li>
-                            <li>Delta Region</li>
-                            <li>Upper Egypt</li>
-                            <li>Coastal Cities</li>
-                        </ul>
-                    </div>
 
                     <div className={styles.card}>
                         <h3>Tracking Your Order</h3>
