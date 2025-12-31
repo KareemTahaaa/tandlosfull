@@ -152,7 +152,7 @@ export default function CheckoutPage() {
             },
             zoneId: parseInt(selectedZone),
             items: cartItems,
-            total: cartTotal + Math.max(0, shippingFee - 20)
+            total: cartTotal + Math.max(0, shippingFee - 25)
         };
 
         try {
@@ -311,7 +311,7 @@ export default function CheckoutPage() {
                                 <div className={styles.totalRow} style={{ color: '#4caf50', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                                         <span>Shipping Discount</span>
-                                        <span>-20 EGP</span>
+                                        <span>-25 EGP</span>
                                     </div>
                                     <span style={{ fontSize: '0.75rem', fontStyle: 'italic', fontWeight: '400' }}>
                                         We pay for some of the shipping fees because you are a lucky customer
@@ -320,7 +320,7 @@ export default function CheckoutPage() {
                             )}
                             <div className={`${styles.totalRow} ${styles.finalTotal}`}>
                                 <span>Total</span>
-                                <span>{(cartTotal + Math.max(0, shippingFee - 20)).toLocaleString()} EGP</span>
+                                <span>{(cartTotal + Math.max(0, shippingFee - 25)).toLocaleString()} EGP</span>
                             </div>
                         </div>
                     </div>
