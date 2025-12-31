@@ -108,7 +108,7 @@
 }
 
 .list li strong {
-    color: var(--text-primary);
+    color: #000;
 }
 
 .orderedList {
