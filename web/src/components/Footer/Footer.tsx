@@ -18,6 +18,7 @@ const Footer = () => {
                         <Link href="/shipping-returns" className={styles.link}>Shipping & Returns</Link>
                         <Link href="/contact" className={styles.link}>Contact</Link>
                     </div>
+
                     <div className={styles.column}>
                         <h3 className={styles.heading}>Follow Us</h3>
                         <div className={styles.social}>

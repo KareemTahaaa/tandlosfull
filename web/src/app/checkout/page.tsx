@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import styles from './CheckoutPage.module.css';
 import { useRouter } from 'next/navigation';
@@ -10,6 +10,65 @@ export default function CheckoutPage() {
     const { cartItems, cartTotal, clearCart, removeFromCart } = useCart();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Geography State
+    const [governorates, setGovernorates] = useState<any[]>([]);
+    const [cities, setCities] = useState<any[]>([]);
+    const [zones, setZones] = useState<any[]>([]);
+
+    const [selectedGov, setSelectedGov] = useState<string>("");
+    const [selectedCity, setSelectedCity] = useState<string>("");
+    const [selectedZone, setSelectedZone] = useState<string>("");
+
+    // Fetch Governorates
+    useEffect(() => {
+        async function fetchGovs() {
+            try {
+                const res = await fetch('/api/shipping/governorates');
+                const data = await res.json();
+                setGovernorates(data.results || data);
+            } catch (err) {
+                console.error("Failed to fetch governorates", err);
+            }
+        }
+        fetchGovs();
+    }, []);
+
+    // Fetch Cities
+    useEffect(() => {
+        if (!selectedGov) {
+            setCities([]);
+            return;
+        }
+        async function fetchCities() {
+            try {
+                const res = await fetch(`/api/shipping/cities?governorateId=${selectedGov}`);
+                const data = await res.json();
+                setCities(data.results || data);
+            } catch (err) {
+                console.error("Failed to fetch cities", err);
+            }
+        }
+        fetchCities();
+    }, [selectedGov]);
+
+    // Fetch Zones
+    useEffect(() => {
+        if (!selectedCity) {
+            setZones([]);
+            return;
+        }
+        async function fetchZones() {
+            try {
+                const res = await fetch(`/api/shipping/zones?cityId=${selectedCity}`);
+                const data = await res.json();
+                setZones(data.results || data);
+            } catch (err) {
+                console.error("Failed to fetch zones", err);
+            }
+        }
+        fetchZones();
+    }, [selectedCity]);
 
     if (cartItems.length === 0) {
         return <div className="container section">Your cart is empty.</div>;
@@ -29,9 +88,10 @@ export default function CheckoutPage() {
                 firstName: formData.get('firstName'),
                 lastName: formData.get('lastName'),
                 address: formData.get('address'),
-                city: formData.get('city'),
-                governorate: formData.get('governorate'),
+                city: cities.find(c => c.id.toString() === selectedCity)?.name || "",
+                governorate: governorates.find(g => g.id.toString() === selectedGov)?.name || "",
             },
+            zoneId: parseInt(selectedZone),
             items: cartItems,
             total: cartTotal + 50
         };
@@ -82,8 +142,53 @@ export default function CheckoutPage() {
                             <input name="address" type="text" placeholder="Address" required className={styles.input} />
                             <input name="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" className={styles.input} />
                             <div className={styles.row}>
-                                <input name="city" type="text" placeholder="City" required className={styles.input} />
-                                <input name="governorate" type="text" placeholder="Governorate" required className={styles.input} />
+                                <select
+                                    name="governorate"
+                                    className={styles.input}
+                                    required
+                                    value={selectedGov}
+                                    onChange={(e) => {
+                                        setSelectedGov(e.target.value);
+                                        setSelectedCity("");
+                                        setSelectedZone("");
+                                    }}
+                                >
+                                    <option value="">Select Governorate</option>
+                                    {governorates.map(gov => (
+                                        <option key={gov.id} value={gov.id}>{gov.name}</option>
+                                    ))}
+                                </select>
+                                <select
+                                    name="city"
+                                    className={styles.input}
+                                    required
+                                    value={selectedCity}
+                                    disabled={!selectedGov}
+                                    onChange={(e) => {
+                                        setSelectedCity(e.target.value);
+                                        setSelectedZone("");
+                                    }}
+                                >
+                                    <option value="">Select City</option>
+                                    {cities.map(city => (
+                                        <option key={city.id} value={city.id}>{city.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className={styles.row}>
+                                <select
+                                    name="zone"
+                                    className={styles.input}
+                                    required
+                                    value={selectedZone}
+                                    disabled={!selectedCity}
+                                    onChange={(e) => setSelectedZone(e.target.value)}
+                                >
+                                    <option value="">Select Zone</option>
+                                    {zones.map(zone => (
+                                        <option key={zone.id} value={zone.id}>{zone.name}</option>
+                                    ))}
+                                </select>
                                 <input name="postalCode" type="text" placeholder="Postal Code" className={styles.input} />
                             </div>
                             <input name="phone" type="tel" placeholder="Phone" required className={styles.input} />

@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { contact, shipping, items, total } = body;
+        const { contact, shipping, items, total, zoneId } = body;
 
         // Start a transaction to ensure stock is updated atomically
         const order = await prisma.$transaction(async (tx) => {
@@ -94,7 +94,8 @@ export async function POST(request: Request) {
             shipment = await createShipment({
                 orderId: order.id,
                 items: items,
-                total: total
+                total: total,
+                zoneId: zoneId
             }, {
                 firstName: shipping.firstName,
                 lastName: shipping.lastName,
