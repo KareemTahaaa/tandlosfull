@@ -21,15 +21,18 @@ export default function ShopPage() {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
-                const res = await fetch(`${baseUrl}/api/products`);
+                const res = await fetch('/api/products');
                 if (!res.ok) {
                     const errorText = await res.text();
                     console.error('API Error:', errorText);
                     throw new Error('Failed to fetch products');
                 }
                 const data = await res.json();
-                setProducts(data);
+                if (Array.isArray(data)) {
+                    setProducts(data);
+                } else {
+                    console.error('Products data is not an array:', data);
+                }
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {

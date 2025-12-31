@@ -15,6 +15,7 @@ export default function CheckoutPage() {
     const [governorates, setGovernorates] = useState<any[]>([]);
     const [cities, setCities] = useState<any[]>([]);
     const [zones, setZones] = useState<any[]>([]);
+    const [geoError, setGeoError] = useState<string | null>(null);
 
     const [selectedGov, setSelectedGov] = useState<string>("");
     const [selectedCity, setSelectedCity] = useState<string>("");
@@ -26,9 +27,17 @@ export default function CheckoutPage() {
             try {
                 const res = await fetch('/api/shipping/governorates');
                 const data = await res.json();
-                setGovernorates(data.results || data);
+                if (Array.isArray(data)) {
+                    setGovernorates(data);
+                } else if (data.results && Array.isArray(data.results)) {
+                    setGovernorates(data.results);
+                } else {
+                    console.error("Invalid governorates data:", data);
+                    setGeoError("Failed to load shipping locations. Please try again later.");
+                }
             } catch (err) {
                 console.error("Failed to fetch governorates", err);
+                setGeoError("Connection error. Please check your internet.");
             }
         }
         fetchGovs();
@@ -44,7 +53,11 @@ export default function CheckoutPage() {
             try {
                 const res = await fetch(`/api/shipping/cities?governorateId=${selectedGov}`);
                 const data = await res.json();
-                setCities(data.results || data);
+                if (Array.isArray(data)) {
+                    setCities(data);
+                } else if (data.results && Array.isArray(data.results)) {
+                    setCities(data.results);
+                }
             } catch (err) {
                 console.error("Failed to fetch cities", err);
             }
@@ -62,7 +75,11 @@ export default function CheckoutPage() {
             try {
                 const res = await fetch(`/api/shipping/zones?cityId=${selectedCity}`);
                 const data = await res.json();
-                setZones(data.results || data);
+                if (Array.isArray(data)) {
+                    setZones(data);
+                } else if (data.results && Array.isArray(data.results)) {
+                    setZones(data.results);
+                }
             } catch (err) {
                 console.error("Failed to fetch zones", err);
             }
@@ -154,7 +171,7 @@ export default function CheckoutPage() {
                                     }}
                                 >
                                     <option value="">Select Governorate</option>
-                                    {governorates.map(gov => (
+                                    {Array.isArray(governorates) && governorates.map(gov => (
                                         <option key={gov.id} value={gov.id}>{gov.name}</option>
                                     ))}
                                 </select>
@@ -170,7 +187,7 @@ export default function CheckoutPage() {
                                     }}
                                 >
                                     <option value="">Select City</option>
-                                    {cities.map(city => (
+                                    {Array.isArray(cities) && cities.map(city => (
                                         <option key={city.id} value={city.id}>{city.name}</option>
                                     ))}
                                 </select>
@@ -185,12 +202,13 @@ export default function CheckoutPage() {
                                     onChange={(e) => setSelectedZone(e.target.value)}
                                 >
                                     <option value="">Select Zone</option>
-                                    {zones.map(zone => (
+                                    {Array.isArray(zones) && zones.map(zone => (
                                         <option key={zone.id} value={zone.id}>{zone.name}</option>
                                     ))}
                                 </select>
                                 <input name="postalCode" type="text" placeholder="Postal Code" className={styles.input} />
                             </div>
+                            {geoError && <p className={styles.errorMessage} style={{ color: '#f44336', fontSize: '0.8rem', marginTop: '10px' }}>{geoError}</p>}
                             <input name="phone" type="tel" placeholder="Phone" required className={styles.input} />
                         </div>
 
