@@ -50,11 +50,11 @@
 }
 
 .card {
-    background: white;
+    background: transparent;
+    border: 1px solid #333;
     padding: 32px;
     border-radius: 16px;
     margin-bottom: 24px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .card h3 {
@@ -62,12 +62,12 @@
     font-size: 1.3rem;
     text-transform: uppercase;
     margin: 0 0 16px 0;
-    color: #000;
+    color: var(--color-white);
 }
 
 .card p {
     line-height: 1.8;
-    color: #333;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 12px;
 }
 
@@ -96,7 +96,7 @@
     padding: 12px 0 12px 32px;
     position: relative;
     line-height: 1.6;
-    color: #000;
+    color: rgba(255, 255, 255, 0.84);
 }
 
 .list li::before {
@@ -108,7 +108,7 @@
 }
 
 .list li strong {
-    color: #000;
+    color: var(--color-white);
 }
 
 .orderedList {
@@ -119,7 +119,7 @@
 .orderedList li {
     padding: 8px 0;
     line-height: 1.8;
-    color: #333;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .orderedList a {
@@ -140,7 +140,8 @@
 
 .tip {
     padding: 24px;
-    background: rgba(0, 0, 0, 0.02);
+    background: #111;
+    border: 1px solid #222;
     border-radius: 12px;
     text-align: center;
 }
@@ -148,11 +149,11 @@
 .tip h4 {
     font-size: 1.1rem;
     margin: 0 0 12px 0;
-    color: #000;
+    color: var(--color-white);
 }
 
 .tip p {
-    color: #333;
+    color: rgba(255, 255, 255, 0.7);
     margin: 0;
     font-size: 0.95rem;
 }
