@@ -1,6 +1,5 @@
 .footer {
     background-color: var(--color-black);
-    border-top: 1px solid var(--border-color);
     padding: 60px 40px 20px;
     margin-top: auto;
 }
@@ -62,7 +61,6 @@
 }
 
 .bottom {
-    border-top: 1px solid #222;
     padding-top: 20px;
     text-align: center;
     color: #555;

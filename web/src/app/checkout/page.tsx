@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import styles from './CheckoutPage.module.css';
 import { useRouter } from 'next/navigation';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiTrash2, FiAlertCircle } from 'react-icons/fi';
 
 export default function CheckoutPage() {
     const { cartItems, cartTotal, clearCart, removeFromCart } = useCart();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPhoneError, setShowPhoneError] = useState(false);
 
     // Geography State
     const [governorates, setGovernorates] = useState<any[]>([]);
@@ -30,10 +31,14 @@ export default function CheckoutPage() {
             try {
                 const res = await fetch('/api/shipping/governorates');
                 const data = await res.json();
-                if (Array.isArray(data)) {
-                    setGovernorates(data);
-                } else if (data.results && Array.isArray(data.results)) {
-                    setGovernorates(data.results);
+                let govList = Array.isArray(data) ? data : (data.results && Array.isArray(data.results) ? data.results : null);
+
+                if (govList) {
+                    // Filter out "no gov" or similar invalid options
+                    const filteredGovs = govList.filter((gov: any) =>
+                        gov.name && !gov.name.toLowerCase().includes('no gov')
+                    );
+                    setGovernorates(filteredGovs);
                 } else {
                     console.error("Invalid governorates data:", data);
                     setGeoError("Failed to load shipping locations. Please try again later.");
@@ -130,7 +135,15 @@ export default function CheckoutPage() {
     }, [selectedCity]);
 
     if (cartItems.length === 0) {
-        return <div className="container section">Your cart is empty.</div>;
+        return (
+            <div className={`container section ${styles.emptyCart}`}>
+                <h2>Your cart is empty</h2>
+                <p>Add some products to your cart to continue with the checkout.</p>
+                <button onClick={() => router.push('/products')} className={styles.continueBtn}>
+                    Continue Shopping
+                </button>
+            </div>
+        );
     }
 
     const handlePlaceOrder = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -138,6 +151,16 @@ export default function CheckoutPage() {
         setIsSubmitting(true);
 
         const formData = new FormData(e.currentTarget);
+        const phone = formData.get('phone') as string;
+
+        // Simple validation for Egyptian phone numbers
+        const phoneRegex = /^01[0125][0-9]{8}$/;
+        if (!phoneRegex.test(phone)) {
+            setShowPhoneError(true);
+            setIsSubmitting(false);
+            return;
+        }
+
         const orderData = {
             contact: {
                 email: formData.get('email'),
@@ -326,6 +349,24 @@ export default function CheckoutPage() {
                     </div>
                 </div>
             </div>
+
+            {showPhoneError && (
+                <div className={styles.errorPopup} onClick={() => setShowPhoneError(false)}>
+                    <div className={styles.errorPopupContent} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.errorPopupIcon}>
+                            <FiAlertCircle />
+                        </div>
+                        <h3>Invalid Phone Number</h3>
+                        <p>Please enter a valid Egyptian phone number (e.g., 01012345678) to complete your order.</p>
+                        <button
+                            className={styles.errorPopupButton}
+                            onClick={() => setShowPhoneError(false)}
+                        >
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

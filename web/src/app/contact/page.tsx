@@ -3,10 +3,7 @@ import styles from './ContactPage.module.css';
 export default function ContactPage() {
     return (
         <div className={`container section ${styles.page}`}>
-            <div className={styles.hero}>
-                <h1 className={styles.title}>Contact Us</h1>
-                <p className={styles.subtitle}>We&apos;re here to help</p>
-            </div>
+            <h1 className={styles.mainTitle}>Contact Us</h1>
 
             <div className={styles.content}>
                 <div className={styles.grid}>
@@ -54,13 +51,6 @@ export default function ContactPage() {
                             <p>Collaborations, press, or any other questions</p>
                         </div>
                     </div>
-                </div>
-
-                <div className={styles.cta}>
-                    <h2>Ready to reach out?</h2>
-                    <a href="mailto:tandlos.eg@gmail.com" className={styles.emailButton}>
-                        Send us an email
-                    </a>
                 </div>
             </div>
         </div>
