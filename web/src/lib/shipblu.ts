@@ -8,6 +8,13 @@ const API_KEY = process.env.SHIPBLU_API_KEY;
 
 async function shipbluFetch(endpoint: string, options: RequestInit = {}) {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : '/' + endpoint}`;
+
+    if (options.method === 'POST' && options.body) {
+        console.log(`ShipBlu API Request [POST] ${endpoint}:`, options.body);
+    } else {
+        console.log(`ShipBlu API Request [${options.method || 'GET'}] ${endpoint}`);
+    }
+
     const res = await fetch(url, {
         ...options,
         headers: {

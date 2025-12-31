@@ -36,10 +36,15 @@
     width: 100%;
     padding: 14px;
     margin-bottom: 14px;
-    background-color: transparent;
+    background-color: #000;
     border: 1px solid #333;
     color: var(--color-white);
     font-family: inherit;
+}
+
+.input option {
+    background-color: #111;
+    color: #fff;
 }
 
 .input:focus {
