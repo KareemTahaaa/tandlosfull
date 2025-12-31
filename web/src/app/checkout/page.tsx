@@ -66,8 +66,12 @@ export default function CheckoutPage() {
                     })
                 });
                 const data = await res.json();
-                if (data.shippingFee !== undefined) {
+
+                if (res.ok && data.shippingFee !== undefined) {
                     setShippingFee(data.shippingFee);
+                } else {
+                    console.error("Calculation error:", data.error || "Unknown error");
+                    setShippingFee(50); // Fallback on error
                 }
             } catch (err) {
                 console.error("Failed to calculate shipping fee", err);

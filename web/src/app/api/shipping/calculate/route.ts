@@ -32,11 +32,18 @@ export async function POST(request: Request) {
             }),
         });
 
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error('Failed to parse ShipBlu response as JSON:', text);
+            return NextResponse.json({ error: 'ShipBlu returned an invalid response. Check server logs.' }, { status: 500 });
+        }
 
         if (!res.ok) {
             console.error('ShipBlu Pricing Error:', data);
-            return NextResponse.json({ error: data.detail || 'Failed to calculate shipping' }, { status: res.status });
+            return NextResponse.json({ error: data.detail || JSON.stringify(data) || 'Failed to calculate shipping' }, { status: res.status });
         }
 
         // Return the total rounded to integer as per user request
