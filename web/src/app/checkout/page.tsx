@@ -21,6 +21,9 @@ export default function CheckoutPage() {
     const [selectedCity, setSelectedCity] = useState<string>("");
     const [selectedZone, setSelectedZone] = useState<string>("");
 
+    const [shippingFee, setShippingFee] = useState<number>(0);
+    const [calculatingShipping, setCalculatingShipping] = useState(false);
+
     // Fetch Governorates
     useEffect(() => {
         async function fetchGovs() {
@@ -42,6 +45,41 @@ export default function CheckoutPage() {
         }
         fetchGovs();
     }, []);
+
+    // Calculate Shipping Fee
+    useEffect(() => {
+        if (!selectedGov || cartTotal <= 0) {
+            setShippingFee(0);
+            return;
+        }
+
+        async function calculateFee() {
+            setCalculatingShipping(true);
+            try {
+                const res = await fetch('/api/shipping/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        governorateId: selectedGov,
+                        cashAmount: cartTotal,
+                        weight: 1000 // Default weight
+                    })
+                });
+                const data = await res.json();
+                if (data.shippingFee !== undefined) {
+                    setShippingFee(data.shippingFee);
+                }
+            } catch (err) {
+                console.error("Failed to calculate shipping fee", err);
+                setShippingFee(50); // Fallback
+            } finally {
+                setCalculatingShipping(false);
+            }
+        }
+
+        const timer = setTimeout(calculateFee, 500); // Debounce
+        return () => clearTimeout(timer);
+    }, [selectedGov, cartTotal]);
 
     // Fetch Cities
     useEffect(() => {
@@ -110,7 +148,7 @@ export default function CheckoutPage() {
             },
             zoneId: parseInt(selectedZone),
             items: cartItems,
-            total: cartTotal + 50
+            total: cartTotal + shippingFee
         };
 
         try {
@@ -209,15 +247,7 @@ export default function CheckoutPage() {
                                 <input name="postalCode" type="text" placeholder="Postal Code" className={styles.input} />
                             </div>
                             {geoError && <p className={styles.errorMessage} style={{ color: '#f44336', fontSize: '0.8rem', marginTop: '10px' }}>{geoError}</p>}
-                            <input
-                                name="phone"
-                                type="tel"
-                                placeholder="Phone (e.g., 01xxxxxxxxx)"
-                                required
-                                className={styles.input}
-                                pattern="^(01|\+201|00201|201)[0-9]+$"
-                                title="Phone number must start with 01, +201, 00201, or 201"
-                            />
+                            <input name="phone" type="tel" placeholder="Phone" required className={styles.input} />
                         </div>
 
                         <div className={styles.section}>
@@ -271,11 +301,11 @@ export default function CheckoutPage() {
                             </div>
                             <div className={styles.totalRow}>
                                 <span>Shipping</span>
-                                <span>50 EGP</span>
+                                <span>{calculatingShipping ? 'Calculating...' : `${shippingFee.toLocaleString()} EGP`}</span>
                             </div>
                             <div className={`${styles.totalRow} ${styles.finalTotal}`}>
                                 <span>Total</span>
-                                <span>{(cartTotal + 50).toLocaleString()} EGP</span>
+                                <span>{(cartTotal + shippingFee).toLocaleString()} EGP</span>
                             </div>
                         </div>
                     </div>
