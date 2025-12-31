@@ -62,11 +62,12 @@
     font-size: 1.3rem;
     text-transform: uppercase;
     margin: 0 0 16px 0;
+    color: #000;
 }
 
 .card p {
     line-height: 1.8;
-    color: var(--text-secondary);
+    color: #333;
     margin-bottom: 12px;
 }
 
@@ -95,6 +96,7 @@
     padding: 12px 0 12px 32px;
     position: relative;
     line-height: 1.6;
+    color: #000;
 }
 
 .list li::before {
@@ -117,7 +119,7 @@
 .orderedList li {
     padding: 8px 0;
     line-height: 1.8;
-    color: var(--text-secondary);
+    color: #333;
 }
 
 .orderedList a {
@@ -146,10 +148,11 @@
 .tip h4 {
     font-size: 1.1rem;
     margin: 0 0 12px 0;
+    color: #000;
 }
 
 .tip p {
-    color: var(--text-secondary);
+    color: #333;
     margin: 0;
     font-size: 0.95rem;
 }
