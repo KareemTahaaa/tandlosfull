@@ -9,6 +9,7 @@ interface Product {
     id: string;
     title: string;
     price: number;
+    originalPrice?: number | null;
     image: string;
     images: string[];
     stock: number;
@@ -56,6 +57,7 @@ export default function ShopPage() {
                         id={product.id}
                         title={product.title}
                         price={product.price}
+                        originalPrice={product.originalPrice}
                         image={product.image}
                         images={product.images}
                     />
