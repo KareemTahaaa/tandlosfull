@@ -262,7 +262,7 @@ export default function ProductPage() {
 
             <div style={{ gridColumn: '1 / -1' }}>
                 <RelatedProducts currentProductId={product.id} />
-                <ReviewSection productId={product.id} productTitle={product.title} productImage={product.image} />
+                {/* <ReviewSection productId={product.id} productTitle={product.title} productImage={product.image} /> */}
             </div>
         </div>
     );
