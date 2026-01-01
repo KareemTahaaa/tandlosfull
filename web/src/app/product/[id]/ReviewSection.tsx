@@ -20,6 +20,7 @@ export default function ReviewSection({ productId }: ReviewSectionProps) {
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [showReviewModal, setShowReviewModal] = useState(false);
 
     const fetchReviews = async () => {
         try {
@@ -77,7 +78,34 @@ export default function ReviewSection({ productId }: ReviewSectionProps) {
                 <p className={styles.noReviews}>No reviews yet. Be the first!</p>
             )}
 
-            <ReviewForm productId={productId} onReviewSubmitted={fetchReviews} />
+            <div className={styles.actionContainer}>
+                <button
+                    className={styles.writeReviewBtn}
+                    onClick={() => setShowReviewModal(true)}
+                >
+                    Write a Review
+                </button>
+            </div>
+
+            {showReviewModal && (
+                <div className={styles.modalOverlay} onClick={() => setShowReviewModal(false)}>
+                    <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                        <button
+                            className={styles.closeModalBtn}
+                            onClick={() => setShowReviewModal(false)}
+                        >
+                            ×
+                        </button>
+                        <ReviewForm
+                            productId={productId}
+                            onReviewSubmitted={() => {
+                                fetchReviews();
+                                setShowReviewModal(false);
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
