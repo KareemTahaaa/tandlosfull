@@ -7,7 +7,7 @@ const PRODUCTS = [
         description: 'The Cascade Hoodie is crafted from premium heavyweight cotton for ultimate comfort and durability.',
         price: 2100,
         originalPrice: 2500,
-        image: '/black-front.png',
+        image: '/crewneck-grey-back.png',
         images: ['/black-front.png', '/black-back.png'],
         stock: 50,
     },
