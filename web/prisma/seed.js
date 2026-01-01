@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const PRODUCTS = [
     {
         title: 'Cascade Heavyweight Hoodie',
-        description: 'The Cascade Hoodie is crafted from premium heavyweight cotton for ultimate comfort and durability. Featuring a relaxed fit, drop shoulders, and our signature puff print logo.',
+        description: 'The Cascade Hoodie is crafted from premium heavyweight cotton for ultimate comfort and durability.',
         price: 2100,
         originalPrice: 2500,
         image: '/black-front.png',
@@ -15,6 +15,7 @@ const PRODUCTS = [
         title: 'Essential Black Tee',
         description: 'A wardrobe staple redefined. 100% organic cotton with a boxy fit.',
         price: 950,
+        // No discount for this item
         image: '/tandlos-sweater.png',
         stock: 100,
     },
@@ -22,6 +23,7 @@ const PRODUCTS = [
         title: 'Signature Sweatpants',
         description: 'Matching bottoms for the Cascade Hoodie. Elasticated cuffs and waist.',
         price: 1800,
+        originalPrice: 2200,
         image: '/tandlos-sweater.png',
         stock: 30,
     },
@@ -43,6 +45,7 @@ const PRODUCTS = [
         title: 'Cargo Parachute Pants',
         description: 'Lightweight technical fabric with adjustable cord lock hems.',
         price: 2200,
+        originalPrice: 2800,
         image: '/tandlos-sweater.png',
         stock: 25,
     },
