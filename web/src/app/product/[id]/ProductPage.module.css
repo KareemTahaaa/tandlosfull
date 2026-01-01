@@ -20,7 +20,8 @@
     padding: 10px 0;
     margin-bottom: 20px;
     transition: color 0.2s;
-    width: fit-content;
+    width: 100%;
+    grid-column: 1 / -1;
 }
 
 .backButton:hover {
