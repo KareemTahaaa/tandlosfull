@@ -167,15 +167,7 @@ export default function ProductPage() {
                 </div>
 
                 <div className={styles.section}>
-                    <div className={styles.sizeHeader}>
-                        <p className={styles.label}>Select Size</p>
-                        <button
-                            className={styles.sizeGuideBtn}
-                            onClick={() => setShowSizeGuide(true)}
-                        >
-                            Size Guide
-                        </button>
-                    </div>
+                    <p className={styles.label}>Select Size</p>
                     <div className={styles.sizes}>
                         {SIZES.map(size => {
                             const sizeStock = getStockForSize(size);
@@ -194,6 +186,12 @@ export default function ProductPage() {
                                 </button>
                             );
                         })}
+                        <button
+                            className={styles.sizeGuideBtn}
+                            onClick={() => setShowSizeGuide(true)}
+                        >
+                            Size Guide
+                        </button>
                     </div>
                     {showSizeError && <p className={styles.errorMessage}>Please select a size to continue</p>}
                 </div>
@@ -264,7 +262,7 @@ export default function ProductPage() {
 
             <div style={{ gridColumn: '1 / -1' }}>
                 <RelatedProducts currentProductId={product.id} />
-                <ReviewSection productId={product.id} />
+                <ReviewSection productId={product.id} productTitle={product.title} productImage={product.image} />
             </div>
         </div>
     );
