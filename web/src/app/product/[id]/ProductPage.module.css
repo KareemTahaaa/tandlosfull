@@ -130,6 +130,19 @@
     border-color: var(--color-white);
 }
 
+.sizeBtn.outOfStock {
+    background-color: #222;
+    color: #666;
+    border-color: #333;
+    text-decoration: line-through;
+}
+
+.sizeBtn.outOfStock.active {
+    background-color: #333;
+    color: #888;
+    border-color: #555;
+}
+
 .sizeBtn.error {
     border-color: #ff4444;
     color: #ff4444;

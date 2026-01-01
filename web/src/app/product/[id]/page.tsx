@@ -166,13 +166,12 @@ export default function ProductPage() {
                             return (
                                 <button
                                     key={size}
-                                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.active : ''} ${showSizeError ? styles.error : ''}`}
+                                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.active : ''} ${showSizeError ? styles.error : ''} ${!isAvailable ? styles.outOfStock : ''}`}
                                     onClick={() => {
                                         setSelectedSize(size);
                                         setShowSizeError(false);
                                     }}
-                                    disabled={!isAvailable}
-                                    style={{ opacity: isAvailable ? 1 : 0.5, cursor: isAvailable ? 'pointer' : 'not-allowed' }}
+                                // Removed disabled prop to allow selection of out-of-stock items
                                 >
                                     {size}
                                 </button>
@@ -192,7 +191,7 @@ export default function ProductPage() {
                     <button
                         className={styles.addToCartBtn}
                         onClick={handleAddToCart}
-                        disabled={!selectedSize || !inStock}
+                        disabled={selectedSize ? !inStock : true} // Disabled if no size or out of stock
                         style={{ opacity: (selectedSize && inStock) ? 1 : 0.5, cursor: (selectedSize && inStock) ? 'pointer' : 'not-allowed' }}
                     >
                         {selectedSize ? (inStock ? 'Add to Cart' : 'Sold Out') : 'Select Size'}
@@ -218,7 +217,7 @@ export default function ProductPage() {
                         cursor: (selectedSize && !inStock) ? 'not-allowed' : 'pointer'
                     }}
                 >
-                    Buy Now
+                    {selectedSize && !inStock ? 'Sold Out' : 'Buy Now'}
                 </button>
 
                 {showTryOn && (
