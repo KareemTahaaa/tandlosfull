@@ -158,6 +158,20 @@
     opacity: 0.9;
 }
 
+.continueShoppingLink {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.continueShoppingLink:hover {
+    color: var(--color-white);
+}
+
 @media (max-width: 900px) {
     .content {
         grid-template-columns: 1fr;
