@@ -122,10 +122,13 @@ export default function CheckoutPage() {
             try {
                 const res = await fetch(`/api/shipping/zones?cityId=${selectedCity}`);
                 const data = await res.json();
-                if (Array.isArray(data)) {
-                    setZones(data);
-                } else if (data.results && Array.isArray(data.results)) {
-                    setZones(data.results);
+                let zoneList = Array.isArray(data) ? data : (data.results && Array.isArray(data.results) ? data.results : null);
+
+                if (zoneList) {
+                    const filteredZones = zoneList.filter((zone: any) =>
+                        zone.name && !zone.name.toLowerCase().includes('sort by shipblu')
+                    );
+                    setZones(filteredZones);
                 }
             } catch (err) {
                 console.error("Failed to fetch zones", err);
