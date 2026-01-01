@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useNotification } from '@/context/NotificationContext';
+import { FiArrowLeft } from 'react-icons/fi';
 import dynamic from 'next/dynamic';
 import styles from './ProductPage.module.css';
 
@@ -106,7 +107,12 @@ export default function ProductPage() {
     const inStock = selectedSize ? getStockForSize(selectedSize) > 0 : product.stocks.some(s => s.quantity > 0);
 
     return (
+    return (
         <div className={`container ${styles.productPage}`}>
+            <button onClick={() => router.back()} className={styles.backButton}>
+                <FiArrowLeft size={24} />
+                <span>Back</span>
+            </button>
             <div className={styles.gallery}>
                 <div className={styles.mainImage}>
                     <Image
