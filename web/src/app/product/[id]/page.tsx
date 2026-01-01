@@ -14,6 +14,9 @@ const VirtualTryOn = dynamic(
     { ssr: false }
 );
 
+import ReviewSection from './ReviewSection';
+import RelatedProducts from './RelatedProducts';
+
 interface Product {
     id: string;
     title: string;
@@ -257,6 +260,11 @@ export default function ProductPage() {
                         </div>
                     </div>
                 )}
+            </div>
+
+            <div style={{ gridColumn: '1 / -1' }}>
+                <RelatedProducts currentProductId={product.id} />
+                <ReviewSection productId={product.id} />
             </div>
         </div>
     );
