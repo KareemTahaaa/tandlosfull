@@ -11,6 +11,12 @@ async function main() {
                 image: "/black-front.png"
             }
         });
+
+        // Sync productTitle in stocks
+        await prisma.productStock.updateMany({
+            where: { productId: updated.id },
+            data: { productTitle: updated.title }
+        });
         console.log('Successfully updated product:', updated.title);
     } catch (error) {
         console.error('Error updating product:', error);

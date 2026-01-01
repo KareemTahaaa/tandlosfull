@@ -142,7 +142,7 @@ export default function CheckoutPage() {
             <div className={`container section ${styles.emptyCart}`}>
                 <h2>Your cart is empty</h2>
                 <p>Add some products to your cart to continue with the checkout.</p>
-                <button onClick={() => router.push('/products')} className={styles.continueBtn}>
+                <button onClick={() => router.push('/shop')} className={styles.continueBtn}>
                     Continue Shopping
                 </button>
             </div>
