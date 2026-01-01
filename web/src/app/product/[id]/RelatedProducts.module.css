@@ -34,7 +34,6 @@
     width: 100%;
     aspect-ratio: 3/4;
     background-color: transparent;
-    /* Changed from #111 */
     overflow: hidden;
     margin-bottom: 15px;
 }
@@ -66,6 +65,15 @@
 
 @media (max-width: 768px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .title {
+        font-size: 0.7rem;
+    }
+
+    .price {
+        font-size: 0.7rem;
     }
 }
