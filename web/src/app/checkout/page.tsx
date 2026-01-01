@@ -34,9 +34,9 @@ export default function CheckoutPage() {
                 let govList = Array.isArray(data) ? data : (data.results && Array.isArray(data.results) ? data.results : null);
 
                 if (govList) {
-                    // Filter out "no gov" or similar invalid options
+                    // Filter out "no gov", "nogov" or similar invalid options
                     const filteredGovs = govList.filter((gov: any) =>
-                        gov.name && !gov.name.toLowerCase().includes('no gov')
+                        gov.name && !/no\s?gov/i.test(gov.name)
                     );
                     setGovernorates(filteredGovs);
                 } else {
