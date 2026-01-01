@@ -39,6 +39,7 @@ export default function ProductPage() {
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
     const [showSizeError, setShowSizeError] = useState(false);
     const [showTryOn, setShowTryOn] = useState(false);
+    const [showSizeGuide, setShowSizeGuide] = useState(false);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
 
     const id = params.id as string;
@@ -163,7 +164,15 @@ export default function ProductPage() {
                 </div>
 
                 <div className={styles.section}>
-                    <p className={styles.label}>Select Size</p>
+                    <div className={styles.sizeHeader}>
+                        <p className={styles.label}>Select Size</p>
+                        <button
+                            className={styles.sizeGuideBtn}
+                            onClick={() => setShowSizeGuide(true)}
+                        >
+                            Size Guide
+                        </button>
+                    </div>
                     <div className={styles.sizes}>
                         {SIZES.map(size => {
                             const sizeStock = getStockForSize(size);
@@ -230,6 +239,23 @@ export default function ProductPage() {
                         productTitle={product.title}
                         onClose={() => setShowTryOn(false)}
                     />
+                )}
+
+                {showSizeGuide && (
+                    <div className={styles.modalOverlay} onClick={() => setShowSizeGuide(false)}>
+                        <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+                            <button
+                                className={styles.closeModalBtn}
+                                onClick={() => setShowSizeGuide(false)}
+                            >
+                                ×
+                            </button>
+                            <h3>Size Guide</h3>
+                            <div className={styles.placeholderImage}>
+                                <p>Size Chart Image Placeholder</p>
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>
