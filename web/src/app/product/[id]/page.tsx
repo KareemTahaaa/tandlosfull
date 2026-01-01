@@ -212,8 +212,11 @@ export default function ProductPage() {
                         });
                         router.push('/checkout');
                     }}
-                    disabled={!selectedSize || !inStock}
-                    style={{ opacity: (selectedSize && inStock) ? 1 : 0.5, cursor: (selectedSize && inStock) ? 'pointer' : 'not-allowed' }}
+                    disabled={selectedSize ? !inStock : false}
+                    style={{
+                        opacity: (selectedSize && !inStock) ? 0.5 : 1,
+                        cursor: (selectedSize && !inStock) ? 'not-allowed' : 'pointer'
+                    }}
                 >
                     Buy Now
                 </button>

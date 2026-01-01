@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import styles from './CheckoutPage.module.css';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { FiTrash2, FiAlertCircle } from 'react-icons/fi';
 
 export default function CheckoutPage() {
@@ -140,11 +141,10 @@ export default function CheckoutPage() {
     if (cartItems.length === 0) {
         return (
             <div className={`container section ${styles.emptyCart}`}>
-                <h2>Your cart is empty</h2>
-                <p>Add some products to your cart to continue with the checkout.</p>
-                <button onClick={() => router.push('/shop')} className={styles.continueBtn}>
+                <h2>Your Cart is Empty</h2>
+                <Link href="/shop" className={styles.continueBtn}>
                     Continue Shopping
-                </button>
+                </Link>
             </div>
         );
     }
