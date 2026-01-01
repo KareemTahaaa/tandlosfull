@@ -107,7 +107,6 @@ export default function ProductPage() {
     const inStock = selectedSize ? getStockForSize(selectedSize) > 0 : product.stocks.some(s => s.quantity > 0);
 
     return (
-    return (
         <div className={`container ${styles.productPage}`}>
             <button onClick={() => router.back()} className={styles.backButton}>
                 <FiArrowLeft size={24} />
