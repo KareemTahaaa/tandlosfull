@@ -62,6 +62,21 @@ export default function CartPage() {
                 </div>
 
                 <div className={styles.summary}>
+                    <div className={styles.freeShippingContainer}>
+                        <p className={styles.freeShippingText}>
+                            {cartTotal >= 1700
+                                ? "You've unlocked FREE Shipping!"
+                                : `Add ${(1700 - cartTotal).toLocaleString()} EGP more for FREE Shipping`
+                            }
+                        </p>
+                        <div className={styles.progressBar}>
+                            <div
+                                className={styles.progressFill}
+                                style={{ width: `${Math.min(100, (cartTotal / 1700) * 100)}%` }}
+                            />
+                        </div>
+                    </div>
+
                     <h2>Order Summary</h2>
                     <div className={styles.row}>
                         <span>Subtotal</span>
