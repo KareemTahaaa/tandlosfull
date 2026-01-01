@@ -6,12 +6,13 @@ interface ProductCardProps {
     id: string;
     title: string;
     price: number;
+    originalPrice?: number | null;
     image: string;
     images?: string[];
     badge?: string;
 }
 
-const ProductCard = ({ id, title, price, image, images, badge }: ProductCardProps) => {
+const ProductCard = ({ id, title, price, originalPrice, image, images, badge }: ProductCardProps) => {
     const hasMultipleImages = images && images.length > 1;
 
     return (
@@ -37,7 +38,12 @@ const ProductCard = ({ id, title, price, image, images, badge }: ProductCardProp
             </div>
             <div className={styles.info}>
                 <h3 className={styles.title}>{title}</h3>
-                <span className={styles.price}>{price.toLocaleString()} EGP</span>
+                <div className={styles.priceContainer}>
+                    {originalPrice && originalPrice > price && (
+                        <span className={styles.originalPrice}>{originalPrice.toLocaleString()} EGP</span>
+                    )}
+                    <span className={styles.price}>{price.toLocaleString()} EGP</span>
+                </div>
             </div>
         </Link>
     );

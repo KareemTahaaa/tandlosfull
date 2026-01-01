@@ -18,6 +18,7 @@ interface Product {
     title: string;
     description: string;
     price: number;
+    originalPrice?: number | null;
     image: string;
     images: string[];
     stocks: { size: string; quantity: number }[];
@@ -138,7 +139,12 @@ export default function ProductPage() {
 
             <div className={styles.details}>
                 <h1 className={styles.title}>{product.title}</h1>
-                <p className={styles.price}>{product.price.toLocaleString()} EGP</p>
+                <div className={styles.priceContainer}>
+                    {product.originalPrice && product.originalPrice > product.price && (
+                        <span className={styles.originalPrice}>{product.originalPrice.toLocaleString()} EGP</span>
+                    )}
+                    <p className={styles.price}>{product.price.toLocaleString()} EGP</p>
+                </div>
 
                 <div className={styles.section}>
                     <p className={styles.label}>Description</p>

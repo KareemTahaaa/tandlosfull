@@ -12,6 +12,7 @@ model Product {
   title       String
   description String?
   price       Int
+  originalPrice Int?    // Optional original price for discounts
   image       String      // Primary image/thumbnail
   images      String[]    // Array of all images (front, back, etc.)
 
