@@ -3,51 +3,61 @@ const prisma = new PrismaClient();
 
 const PRODUCTS = [
     {
-        title: 'Cascade Heavyweight Hoodie',
-        description: 'The Cascade Hoodie is crafted from premium heavyweight cotton for ultimate comfort and durability.',
-        price: 2100,
-        originalPrice: 2500,
-        image: '/crewneck-grey-back.png',
-        images: ['/black-front.png', '/black-back.png'],
+        title: 'Midnight Wave Crewneck',
+        description: 'A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.',
+        price: 799,
+        originalPrice: 1000,
+        image: '/crewneck-black-front.png',
+        images: ['/crewneck-black-front.png', '/crewneck-black-back.png'],
         stock: 50,
     },
     {
-        title: 'Essential Black Tee',
-        description: 'A wardrobe staple redefined. 100% organic cotton with a boxy fit.',
-        price: 950,
-        // No discount for this item
-        image: '/tandlos-sweater.png',
-        stock: 100,
+        title: 'Ash Wave Crewneck',
+        description: 'A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.',
+        price: 799,
+        originalPrice: 1000,
+        image: '/crewneck-grey-front.png',
+        images: ['/crewneck-grey-front.png', '/crewneck-grey-back.png'],
+        stock: 50,
     },
     {
-        title: 'Signature Sweatpants',
-        description: 'Matching bottoms for the Cascade Hoodie. Elasticated cuffs and waist.',
-        price: 1800,
-        originalPrice: 2200,
-        image: '/tandlos-sweater.png',
-        stock: 30,
+        title: 'Pink Wave Crewneck',
+        description: 'A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.',
+        price: 799,
+        originalPrice: 1000,
+        image: '/crewneck-pink-front.png',
+        images: ['/crewneck-pink-front.png', '/crewneck-pink-back.png'],
+        stock: 50,
     },
     {
-        title: 'Utility Vest - Black',
-        description: 'Multi-pocket tactical vest. Water-resistant nylon shell.',
-        price: 2500,
-        image: '/tandlos-sweater.png',
-        stock: 10,
+        title: 'Black Phantom Fleece',
+        description: 'Full black fleece Jacket with tonal stitching and a full hood',
+        price: 999,
+        originalPrice: 1200,
+        image: '/phantom-black.png',
+        images: [
+            '/phantom-black.png',
+            '/black phantom mockup.png'
+        ],
+        stock: 50,
     },
     {
-        title: 'Oversized Graphic Tee',
-        description: 'Heavyweight tee with screen printed back graphic.',
-        price: 1100,
-        image: '/tandlos-sweater.png',
-        stock: 75,
+        title: 'GreyXBlack Phantom Fleece',
+        description: 'Dual-tone fleece jacket with tonal stitching and a full hood',
+        price: 999,
+        originalPrice: 1200,
+        image: '/phantom-greyxblack.png',
+        images: ['/phantom-greyxblack.png'],
+        stock: 50,
     },
     {
-        title: 'Cargo Parachute Pants',
-        description: 'Lightweight technical fabric with adjustable cord lock hems.',
-        price: 2200,
-        originalPrice: 2800,
-        image: '/tandlos-sweater.png',
-        stock: 25,
+        title: 'BlackXGrey Phantom Fleece',
+        description: 'Dual-tone fleece jacket with tonal stitching and a full hood',
+        price: 999,
+        originalPrice: 1200,
+        image: '/phantom-blackxgrey.png',
+        images: ['/phantom-blackxgrey.png'],
+        stock: 50,
     },
 ];
 
@@ -66,9 +76,9 @@ async function main() {
     console.log('Start seeding ...');
     // Clear existing data to avoid conflicts during re-seed
     await prisma.productStock.deleteMany({});
-    await prisma.order.deleteMany({});
     await prisma.customer.deleteMany({});
     await prisma.product.deleteMany({});
+    // Note: We keep subscribers and orders for now unless we really want a clean slate
 
     for (const p of PRODUCTS) {
         // Separate stock calculation from product data
@@ -76,7 +86,7 @@ async function main() {
         const productData = { ...p };
         delete productData.stock;
 
-        const product = await prisma.product.create({
+        await prisma.product.create({
             data: {
                 ...productData,
                 stocks: {
@@ -84,7 +94,7 @@ async function main() {
                 }
             },
         });
-        console.log(`Created product with id: ${product.id} and distributed stock.`);
+        console.log(`Created product: ${p.title}`);
     }
     console.log('Seeding finished.');
 }
