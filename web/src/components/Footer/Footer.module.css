@@ -133,6 +133,20 @@
     letter-spacing: 0.05em;
 }
 
+.statusMessage {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.success {
+    color: #4CAF50;
+}
+
+.error {
+    color: #FF5252;
+}
+
 @media (max-width: 600px) {
     .links {
         gap: 15px;
