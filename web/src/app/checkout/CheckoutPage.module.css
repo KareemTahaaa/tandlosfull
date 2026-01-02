@@ -132,6 +132,71 @@
     justify-content: center;
 }
 
+.promoSection {
+    border-top: 1px solid #333;
+    padding: 20px 0;
+    margin-top: 10px;
+}
+
+.promoInputGroup {
+    display: flex;
+    gap: 10px;
+}
+
+.promoInput {
+    flex: 1;
+    padding: 10px;
+    background-color: #000;
+    border: 1px solid #333;
+    color: #fff;
+    font-family: inherit;
+    text-transform: uppercase;
+}
+
+.applyBtn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.applyBtn:hover:not(:disabled) {
+    background-color: #444;
+}
+
+.applyBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.promoError {
+    color: #f44336;
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.appliedPromo {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #4caf50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.appliedPromo button {
+    background: none;
+    border: none;
+    color: #888;
+    text-decoration: underline;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
 .totals {
     border-top: 1px solid #333;
     padding-top: 20px;

@@ -78,5 +78,14 @@ model Order {
   updatedAt  DateTime    @updatedAt
 }
 
-// REMOVED: OrderItem model merged into Order.items column
+
+model PromoCode {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  discountType  String   @default("PERCENTAGE") // PERCENTAGE or FIXED
+  discountValue Int
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
 

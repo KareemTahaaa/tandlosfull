@@ -26,6 +26,12 @@ export default function CheckoutPage() {
     const [shippingFee, setShippingFee] = useState<number>(0);
     const [calculatingShipping, setCalculatingShipping] = useState(false);
 
+    // Promo Code State
+    const [promoCodeInput, setPromoCodeInput] = useState("");
+    const [appliedPromo, setAppliedPromo] = useState<any>(null);
+    const [promoError, setPromoError] = useState("");
+    const [isApplyingPromo, setIsApplyingPromo] = useState(false);
+
     // Fetch Governorates
     useEffect(() => {
         async function fetchGovs() {
@@ -138,6 +144,43 @@ export default function CheckoutPage() {
         fetchZones();
     }, [selectedCity]);
 
+    const handleApplyPromo = async () => {
+        if (!promoCodeInput) return;
+        setIsApplyingPromo(true);
+        setPromoError("");
+
+        try {
+            const res = await fetch('/api/promo/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: promoCodeInput }),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                setAppliedPromo(data);
+                setPromoCodeInput("");
+            } else {
+                setPromoError(data.error || "Invalid promo code");
+            }
+        } catch (err) {
+            setPromoError("Failed to validate promo code");
+        } finally {
+            setIsApplyingPromo(false);
+        }
+    };
+
+    const calculateDiscount = () => {
+        if (!appliedPromo) return 0;
+        if (appliedPromo.discountType === 'PERCENTAGE') {
+            return (cartTotal * appliedPromo.discountValue) / 100;
+        }
+        return appliedPromo.discountValue;
+    };
+
+    const discountAmount = calculateDiscount();
+    const finalTotal = cartTotal - discountAmount + Math.max(0, shippingFee - 25);
+
     if (cartItems.length === 0) {
         return (
             <div className={`container section ${styles.emptyCart}`}>
@@ -178,7 +221,8 @@ export default function CheckoutPage() {
             },
             zoneId: parseInt(selectedZone),
             items: cartItems,
-            total: cartTotal + Math.max(0, shippingFee - 25)
+            total: finalTotal,
+            promoCode: appliedPromo?.code
         };
 
         try {
@@ -324,6 +368,34 @@ export default function CheckoutPage() {
                             ))}
                         </div>
 
+                        <div className={styles.promoSection}>
+                            <div className={styles.promoInputGroup}>
+                                <input
+                                    type="text"
+                                    placeholder="Promo code"
+                                    value={promoCodeInput}
+                                    onChange={(e) => setPromoCodeInput(e.target.value.toUpperCase())}
+                                    className={styles.promoInput}
+                                    disabled={isApplyingPromo}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={handleApplyPromo}
+                                    className={styles.applyBtn}
+                                    disabled={isApplyingPromo || !promoCodeInput}
+                                >
+                                    {isApplyingPromo ? '...' : 'Apply'}
+                                </button>
+                            </div>
+                            {promoError && <p className={styles.promoError}>{promoError}</p>}
+                            {appliedPromo && (
+                                <div className={styles.appliedPromo}>
+                                    <span>Code <strong>{appliedPromo.code}</strong> applied!</span>
+                                    <button type="button" onClick={() => setAppliedPromo(null)}>Remove</button>
+                                </div>
+                            )}
+                        </div>
+
                         <div className={styles.totals}>
                             <div className={styles.totalRow}>
                                 <span>Subtotal</span>
@@ -344,9 +416,15 @@ export default function CheckoutPage() {
                                     </span>
                                 </div>
                             )}
+                            {discountAmount > 0 && (
+                                <div className={styles.totalRow} style={{ color: '#4caf50' }}>
+                                    <span>Discount</span>
+                                    <span>-{discountAmount.toLocaleString()} EGP</span>
+                                </div>
+                            )}
                             <div className={`${styles.totalRow} ${styles.finalTotal}`}>
                                 <span>Total</span>
-                                <span>{(cartTotal + Math.max(0, shippingFee - 25)).toLocaleString()} EGP</span>
+                                <span>{finalTotal.toLocaleString()} EGP</span>
                             </div>
                         </div>
                     </div>
