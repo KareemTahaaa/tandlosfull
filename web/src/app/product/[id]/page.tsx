@@ -110,6 +110,10 @@ export default function ProductPage() {
 
     const inStock = selectedSize ? getStockForSize(selectedSize) > 0 : product.stocks.some(s => s.quantity > 0);
 
+    const isCrewneck = product.title.toLowerCase().includes('crewneck');
+    const isJacket = product.title.toLowerCase().includes('fleece') || product.title.toLowerCase().includes('jacket');
+    const sizeGuideImage = isCrewneck ? '/crewneck-size-guide.png' : (isJacket ? '/jacket-size-guide.png' : null);
+
     return (
         <div className={`container ${styles.productPage}`}>
             <button onClick={() => router.back()} className={styles.backButton}>
@@ -186,12 +190,14 @@ export default function ProductPage() {
                                 </button>
                             );
                         })}
-                        <button
-                            className={styles.sizeGuideBtn}
-                            onClick={() => setShowSizeGuide(true)}
-                        >
-                            Size Guide
-                        </button>
+                        {sizeGuideImage && (
+                            <button
+                                className={styles.sizeGuideBtn}
+                                onClick={() => setShowSizeGuide(true)}
+                            >
+                                Size Guide
+                            </button>
+                        )}
                     </div>
                     {showSizeError && <p className={styles.errorMessage}>Please select a size to continue</p>}
                 </div>
@@ -252,8 +258,14 @@ export default function ProductPage() {
                                 ×
                             </button>
                             <h3>Size Guide</h3>
-                            <div className={styles.placeholderImage}>
-                                <p>Size Chart Image Placeholder</p>
+                            <div className={styles.sizeGuideImageWrapper}>
+                                <Image
+                                    src={sizeGuideImage || ''}
+                                    alt={`${product.title} Size Guide`}
+                                    width={500}
+                                    height={500}
+                                    className={styles.sizeGuideImage}
+                                />
                             </div>
                         </div>
                     </div>

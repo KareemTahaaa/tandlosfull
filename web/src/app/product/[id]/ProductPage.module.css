@@ -331,13 +331,16 @@
     color: var(--color-white);
 }
 
-.placeholderImage {
+.sizeGuideImageWrapper {
     width: 100%;
-    height: 300px;
-    background-color: #222;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    border: 1px dashed #444;
+    position: relative;
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.sizeGuideImage {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
