@@ -72,9 +72,8 @@ const Footer = () => {
 
                 <div className={styles.links}>
                     <Link href="/shop" className={styles.link}>SHOP ALL</Link>
-                    <Link href="/privacy" className={styles.link}>PRIVACY POLICY</Link>
-                    <Link href="/shipping-returns" className={styles.link}>SHIPPING</Link>
-                    <Link href="/returns" className={styles.link}>RETURNS</Link>
+                    <Link href="/shipping-returns" className={styles.link}>SHIPPING & RETURNS</Link>
+                    <Link href="/contact" className={styles.link}>CONTACT</Link>
                 </div>
 
                 <div className={styles.bottom}>
