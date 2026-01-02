@@ -304,22 +304,19 @@ export default function CheckoutPage() {
                                     ))}
                                 </select>
                             </div>
-                            <div className={styles.row}>
-                                <select
-                                    name="zone"
-                                    className={styles.input}
-                                    required
-                                    value={selectedZone}
-                                    disabled={!selectedCity}
-                                    onChange={(e) => setSelectedZone(e.target.value)}
-                                >
-                                    <option value="">Select Zone</option>
-                                    {Array.isArray(zones) && zones.map(zone => (
-                                        <option key={zone.id} value={zone.id}>{zone.name}</option>
-                                    ))}
-                                </select>
-                                <input name="postalCode" type="text" placeholder="Postal Code" className={styles.input} />
-                            </div>
+                            <select
+                                name="zone"
+                                className={styles.input}
+                                required
+                                value={selectedZone}
+                                disabled={!selectedCity}
+                                onChange={(e) => setSelectedZone(e.target.value)}
+                            >
+                                <option value="">Select Zone</option>
+                                {Array.isArray(zones) && zones.map(zone => (
+                                    <option key={zone.id} value={zone.id}>{zone.name}</option>
+                                ))}
+                            </select>
                             {geoError && <p className={styles.errorMessage} style={{ color: '#f44336', fontSize: '0.8rem', marginTop: '10px' }}>{geoError}</p>}
                             <input name="phone" type="tel" placeholder="Phone" required className={styles.input} />
                         </div>
