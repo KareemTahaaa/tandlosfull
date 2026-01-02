@@ -1,78 +1,150 @@
 .footer {
     background-color: var(--color-black);
-    padding: 60px 40px 20px;
+    padding: 80px 20px 40px;
     margin-top: auto;
+    color: var(--color-white);
 }
 
 .container {
-    max-width: 1400px;
+    max-width: 800px;
     margin: 0 auto;
-}
-
-.grid {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 40px;
-    margin-bottom: 60px;
-}
-
-.column {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribeSection {
+    width: 100%;
+    margin-bottom: 60px;
 }
 
 .heading {
     font-family: var(--font-family-heading);
     text-transform: uppercase;
-    margin-bottom: 8px;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.inputGroup {
+    flex: 1;
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 0;
     color: var(--color-white);
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-bottom-color 0.3s;
+}
+
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.input:focus {
+    border-bottom-color: var(--color-white);
+}
+
+.subscribeButton {
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--color-white);
+    color: var(--color-white);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding: 8px 0;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+
+.subscribeButton:hover {
+    opacity: 0.7;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
 }
 
 .link {
-    color: #666;
-    font-size: 0.9rem;
-    transition: color 0.2s;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    text-transform: uppercase;
     text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
 }
 
 .link:hover {
     color: var(--color-white);
 }
 
-.social {
+.bottom {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 15px;
+    opacity: 0.4;
+}
+
+.social {
+    display: flex;
+    gap: 20px;
 }
 
 .socialLink {
-    color: #666;
-    font-size: 0.9rem;
-    transition: color 0.2s;
     text-decoration: none;
+    color: var(--color-white);
+    font-size: 0.8rem;
+    transition: opacity 0.3s;
 }
 
 .socialLink:hover {
-    color: var(--color-white);
+    opacity: 0.7;
 }
 
-.bottom {
-    padding-top: 20px;
-    text-align: center;
-    color: #555;
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+.copyright {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
 }
 
-@media (max-width: 768px) {
-    .footer {
-        padding: 40px 20px 20px;
+@media (max-width: 600px) {
+    .links {
+        gap: 15px;
+    }
+
+    .form {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .inputGroup {
+        width: 100%;
     }
 }
