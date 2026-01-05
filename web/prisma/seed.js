@@ -124,8 +124,8 @@ const PRODUCTS = [
         description: 'Love Pulse design on a long sleeve top.',
         price: 799,
         originalPrice: 1000,
-        image: '/love-pulse-black.png', // Placeholder
-        images: ['/love-pulse-black.png'],
+        image: '/love-pulse-black-1.png',
+        images: ['/love-pulse-black-1.png', '/love-pulse-black-2.png'],
         stock: 50,
         groupId: 'love-pulse',
         color: 'Black',
