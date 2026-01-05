@@ -174,13 +174,38 @@ function getStockForSizes(totalStock, title, sizes = DEFAULT_SIZES) {
 
 async function main() {
     console.log('Start seeding ...');
-    // Clear existing data to avoid conflicts during re-seed
-    await prisma.productStock.deleteMany({});
-    await prisma.customer.deleteMany({});
-    await prisma.product.deleteMany({});
+    // Don't wipe the database, so we preserve manual changes (stock/prices)
+    // await prisma.review.deleteMany({});
+    // await prisma.productStock.deleteMany({});
+    // await prisma.product.deleteMany({});
     // Note: We keep subscribers and orders for now unless we really want a clean slate
 
+    console.log('Seeding products (skipping existing ones)...');
+
     for (const p of PRODUCTS) {
+        // Check if product exists by title
+        const existing = await prisma.product.findFirst({
+            where: { title: p.title }
+        });
+
+        if (existing) {
+            console.log(`Skipping ${p.title} (already exists)`);
+
+            // Optional: If we wanted to update *only* images/structure but KEEP price/stock:
+            // await prisma.product.update({ 
+            //    where: { id: existing.id },
+            //    data: { 
+            //       groupId: p.groupId, 
+            //       color: p.color, 
+            //       colorCode: p.colorCode,
+            //       image: p.image, 
+            //       images: p.images 
+            //    } 
+            // });
+            // For now, we strictly respect "database only" for values and do nothing.
+            continue;
+        }
+
         // Separate stock calculation from product data
         const initialStock = p.stock;
         const productData = { ...p };
