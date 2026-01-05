@@ -29,7 +29,7 @@ interface Product {
     siblings?: { id: string; color: string; colorCode: string; image: string }[];
 }
 
-const SIZES = ['S', 'M', 'L', 'XL'];
+
 
 export default function ProductPage() {
     const params = useParams();
@@ -191,23 +191,37 @@ export default function ProductPage() {
                 <div className={styles.section}>
                     <p className={styles.label}>Select Size</p>
                     <div className={styles.sizes}>
-                        {SIZES.map(size => {
-                            const sizeStock = getStockForSize(size);
-                            const isAvailable = sizeStock > 0;
-                            return (
-                                <button
-                                    key={size}
-                                    className={`${styles.sizeBtn} ${selectedSize === size ? styles.active : ''} ${showSizeError ? styles.error : ''} ${!isAvailable ? styles.outOfStock : ''}`}
-                                    onClick={() => {
-                                        setSelectedSize(size);
-                                        setShowSizeError(false);
-                                    }}
-                                // Removed disabled prop to allow selection of out-of-stock items
-                                >
-                                    {size}
-                                </button>
-                            );
-                        })}
+                        {(() => {
+                            // Helper to sort sizes: XS < S < M < L < XL < XXL
+                            const sizeOrder = { 'XS': 0, 'S': 1, 'M': 2, 'L': 3, 'XL': 4, 'XXL': 5 };
+                            const availableSizes = product.stocks
+                                .map(s => s.size)
+                                .sort((a, b) => {
+                                    const aOrder = sizeOrder[a as keyof typeof sizeOrder] ?? 99;
+                                    const bOrder = sizeOrder[b as keyof typeof sizeOrder] ?? 99;
+                                    return aOrder - bOrder;
+                                });
+
+                            // If no stock entries (unlikely), fallback or show nothing
+                            const sizesToShow = availableSizes.length > 0 ? availableSizes : ['S', 'M', 'L', 'XL'];
+
+                            return sizesToShow.map(size => {
+                                const sizeStock = getStockForSize(size);
+                                const isAvailable = sizeStock > 0;
+                                return (
+                                    <button
+                                        key={size}
+                                        className={`${styles.sizeBtn} ${selectedSize === size ? styles.active : ''} ${showSizeError ? styles.error : ''} ${!isAvailable ? styles.outOfStock : ''}`}
+                                        onClick={() => {
+                                            setSelectedSize(size);
+                                            setShowSizeError(false);
+                                        }}
+                                    >
+                                        {size}
+                                    </button>
+                                );
+                            });
+                        })()}
                         {sizeGuideImage && (
                             <button
                                 className={styles.sizeGuideBtn}
