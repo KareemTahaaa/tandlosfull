@@ -1,0 +1,84 @@
+[
+  {
+    "id": "cmjuz7xt50000buqph17feuf3",
+    "title": "Midnight Wave Crewneck",
+    "description": "A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.",
+    "price": 799,
+    "originalPrice": 1000,
+    "image": "/crewneck-black-front.png",
+    "images": [
+      "/crewneck-black-front.png",
+      "/crewneck-black-back.png"
+    ],
+    "createdAt": "2026-01-01T05:00:16.746Z",
+    "updatedAt": "2026-01-01T20:46:13.213Z"
+  },
+  {
+    "id": "cmjuz7yb80005buqpxe4xlu7q",
+    "title": "Ash Wave Crewneck",
+    "description": "A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.",
+    "price": 799,
+    "originalPrice": 1000,
+    "image": "/crewneck-grey-front.png",
+    "images": [
+      "/crewneck-grey-front.png",
+      "/crewneck-grey-back.png"
+    ],
+    "createdAt": "2026-01-01T05:00:17.396Z",
+    "updatedAt": "2026-01-01T20:46:13.576Z"
+  },
+  {
+    "id": "cmjuz7yu7000abuqpo07b86pr",
+    "title": "Pink Wave Crewneck",
+    "description": "A soft French terry crewneck with stitched sleeves and a raised puff-print back graphic.",
+    "price": 799,
+    "originalPrice": 1000,
+    "image": "/crewneck-pink-front.png",
+    "images": [
+      "/crewneck-pink-front.png",
+      "/crewneck-pink-back.png"
+    ],
+    "createdAt": "2026-01-01T05:00:18.079Z",
+    "updatedAt": "2026-01-01T20:46:13.946Z"
+  },
+  {
+    "id": "cmjuz7zc1000fbuqpefabdz0n",
+    "title": "Black Phantom Fleece",
+    "description": "Full black fleece Jacket with tonal stitching and a full hood",
+    "price": 999,
+    "originalPrice": 1200,
+    "image": "/phantom-black.png",
+    "images": [
+      "/phantom-black.png",
+      "/black phantom mockup.png"
+    ],
+    "createdAt": "2026-01-01T05:00:18.721Z",
+    "updatedAt": "2026-01-02T07:30:36.234Z"
+  },
+  {
+    "id": "cmjuz80dp000pbuqp8k78mn35",
+    "title": "GreyXBlack Phantom Fleece",
+    "description": "Dual-tone fleece jacket with tonal stitching and a full hood",
+    "price": 999,
+    "originalPrice": 1200,
+    "image": "/phantom-greyxblack.png",
+    "images": [
+      "/phantom-greyxblack.png"
+    ],
+    "createdAt": "2026-01-01T05:00:20.078Z",
+    "updatedAt": "2026-01-02T07:30:36.616Z"
+  },
+  {
+    "id": "cmjuz7zus000kbuqptooxxjb2",
+    "title": "BlackXGrey Phantom Fleece",
+    "description": "Dual-tone fleece jacket with tonal stitching and a full hood",
+    "price": 999,
+    "originalPrice": 1200,
+    "image": "/phantom-blackxgrey.png",
+    "images": [
+      "/phantom-blackxgrey.png"
+    ],
+    "createdAt": "2026-01-01T05:00:19.396Z",
+    "updatedAt": "2026-01-02T07:30:37.000Z"
+  }
+]

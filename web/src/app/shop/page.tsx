@@ -13,6 +13,8 @@ interface Product {
     image: string;
     images: string[];
     stock: number;
+    groupId?: string;
+    color?: string;
 }
 
 export default function ShopPage() {
@@ -48,10 +50,33 @@ export default function ShopPage() {
         return <div className="container section">Loading products...</div>;
     }
 
+    // Filter products to show unique groups (preferring Black)
+    const uniqueProducts = products.reduce((acc, product) => {
+        // If no group, just add it
+        if (!product.groupId) {
+            acc.push(product);
+            return acc;
+        }
+
+        // Check if we already have this group
+        const existingIndex = acc.findIndex(p => p.groupId === product.groupId);
+        if (existingIndex === -1) {
+            // New group, add it
+            acc.push(product);
+        } else {
+            // Group exists. Replace if current is "Black" and existing is not.
+            // (Assuming we want to show Black as the default card)
+            if (product.color === 'Black' && acc[existingIndex].color !== 'Black') {
+                acc[existingIndex] = product;
+            }
+        }
+        return acc;
+    }, [] as Product[]);
+
     return (
         <div className={`container ${styles.page}`}>
             <ProductGrid>
-                {products.map(product => (
+                {uniqueProducts.map(product => (
                     <ProductCard
                         key={product.id}
                         id={product.id}

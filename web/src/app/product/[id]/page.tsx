@@ -26,6 +26,7 @@ interface Product {
     image: string;
     images: string[];
     stocks: { size: string; quantity: number }[];
+    siblings?: { id: string; color: string; colorCode: string; image: string }[];
 }
 
 const SIZES = ['S', 'M', 'L', 'XL'];
@@ -169,6 +170,23 @@ export default function ProductPage() {
                         }
                     </p>
                 </div>
+
+                {product.siblings && product.siblings.length > 0 && (
+                    <div className={styles.section}>
+                        <p className={styles.label}>Select Color</p>
+                        <div className={styles.colors}>
+                            {product.siblings.map(sibling => (
+                                <button
+                                    key={sibling.id}
+                                    className={`${styles.colorBtn} ${sibling.id === product.id ? styles.activeColor : ''}`}
+                                    style={{ backgroundColor: sibling.colorCode || '#ccc' }}
+                                    title={sibling.color || 'Color'}
+                                    onClick={() => router.push(`/product/${sibling.id}`)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <div className={styles.section}>
                     <p className={styles.label}>Select Size</p>

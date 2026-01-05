@@ -15,6 +15,9 @@ model Product {
   originalPrice Int?    // Optional original price for discounts
   image       String      // Primary image/thumbnail
   images      String[]    // Array of all images (front, back, etc.)
+  groupId     String?     // To group color variants
+  color       String?     // e.g. "Black", "Pink"
+  colorCode   String?     // e.g. "#000000"
 
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt

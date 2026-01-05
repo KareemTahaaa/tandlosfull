@@ -27,8 +27,23 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
                 if (res.ok) {
                     const allProducts: Product[] = await res.json();
 
-                    // Filter out current product and shuffle
-                    const others = allProducts.filter(p => p.id !== currentProductId);
+                    // Filter out current product and verify duplicates via groupId
+                    // (Ensure we only show one variant per group, effectively "unique products")
+                    const uniqueGroups = new Set<string>();
+                    const others = allProducts.filter(p => {
+                        if (p.id === currentProductId) return false;
+
+                        // If it has a groupId, only allow one per group
+                        if ((p as any).groupId) { // Cast to any because Product interface below is partial
+                            const gid = (p as any).groupId;
+                            if (uniqueGroups.has(gid)) return false;
+                            uniqueGroups.add(gid);
+                            return true;
+                        }
+
+                        return true;
+                    });
+
                     const shuffled = others.sort(() => 0.5 - Math.random());
 
                     // Take first 3
