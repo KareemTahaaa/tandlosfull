@@ -110,8 +110,8 @@ const PRODUCTS = [
         description: 'Heart Beat design on a long sleeve top.',
         price: 799,
         originalPrice: 1000,
-        image: '/heart-beat-red.png', // Placeholder
-        images: ['/heart-beat-red.png'],
+        image: '/heart-beat-red-1.png',
+        images: ['/heart-beat-red-1.png', '/heart-beat-red-2.png'],
         stock: 50,
         groupId: 'heart-beat',
         color: 'Red',
