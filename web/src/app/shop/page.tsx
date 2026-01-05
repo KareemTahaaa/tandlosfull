@@ -71,7 +71,7 @@ export default function ShopPage() {
             }
         }
         return acc;
-    }, [] as Product[]);
+    }, [] as Product[]).sort((a, b) => a.price - b.price);
 
     return (
         <div className={`container ${styles.page}`}>
