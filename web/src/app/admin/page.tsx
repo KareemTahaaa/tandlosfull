@@ -25,23 +25,25 @@ export default function AdminDashboard() {
             .catch(console.error);
     }, []);
 
-    if (!stats) return <div className="p-8">Loading Admin Dashboard...</div>;
+    if (!stats || !stats.summary || !stats.revenueGraph || !stats.funnel) {
+        return <div className="p-8">Loading Admin Dashboard...</div>;
+    }
 
     const { summary, revenueGraph, funnel } = stats;
 
     const cards = [
-        { label: 'Total Revenue', value: `${summary.revenue.toLocaleString()} EGP`, color: '#4CAF50' },
-        { label: 'Total Orders', value: summary.orders, color: '#2196F3' },
-        { label: 'Products', value: summary.products, color: '#9C27B0' },
-        { label: 'Low Stock Items', value: summary.lowStock, color: '#F44336' },
+        { label: 'Total Revenue', value: `${(summary.revenue || 0).toLocaleString()} EGP`, color: '#4CAF50' },
+        { label: 'Total Orders', value: summary.orders || 0, color: '#2196F3' },
+        { label: 'Products', value: summary.products || 0, color: '#9C27B0' },
+        { label: 'Low Stock Items', value: summary.lowStock || 0, color: '#F44336' },
         { label: 'Live Visitors', value: summary.liveVisitors || 0, color: '#FF9800' },
     ];
 
     const funnelData = [
-        { name: 'Visits', value: funnel.visits },
-        { name: 'Add to Cart', value: funnel.addToCart },
-        { name: 'Checkout', value: funnel.checkoutStart },
-        { name: 'Purchased', value: funnel.purchases },
+        { name: 'Visits', value: funnel.visits || 0 },
+        { name: 'Add to Cart', value: funnel.addToCart || 0 },
+        { name: 'Checkout', value: funnel.checkoutStart || 0 },
+        { name: 'Purchased', value: funnel.purchases || 0 },
     ];
 
     return (
