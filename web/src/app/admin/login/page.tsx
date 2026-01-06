@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminLogin() {
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -55,21 +56,38 @@ export default function AdminLogin() {
 
                 {error && <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
 
-                <div style={{ marginBottom: '1rem' }}>
+                <div style={{ marginBottom: '1rem', position: 'relative' }}>
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Enter Admin Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         style={{
                             width: '100%',
                             padding: '0.75rem',
+                            paddingRight: '2.5rem',
                             borderRadius: '4px',
                             border: '1px solid #333',
                             backgroundColor: '#111',
                             color: '#fff'
                         }}
                     />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                            position: 'absolute',
+                            right: '0.5rem',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'none',
+                            border: 'none',
+                            color: '#888',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
                 </div>
 
                 <button

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useNotification } from '@/context/NotificationContext';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { FiArrowLeft } from 'react-icons/fi';
 import dynamic from 'next/dynamic';
 import styles from './ProductPage.module.css';
@@ -29,13 +30,12 @@ interface Product {
     siblings?: { id: string; color: string; colorCode: string; image: string }[];
 }
 
-
-
 export default function ProductPage() {
     const params = useParams();
     const router = useRouter();
     const { addToCart } = useCart();
     const { showNotification } = useNotification();
+    const { trackAction } = useAnalytics();
 
     // State
     const [product, setProduct] = useState<Product | null>(null);
@@ -98,6 +98,13 @@ export default function ProductPage() {
             price: product.price,
             image: product.image,
             size: selectedSize!
+        });
+
+        trackAction('ADD_TO_CART', {
+            productId: product.id,
+            title: product.title,
+            price: product.price,
+            size: selectedSize
         });
 
         showNotification('Added to cart', 'success');

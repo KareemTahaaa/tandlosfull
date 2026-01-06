@@ -6,10 +6,13 @@ import styles from './CheckoutPage.module.css';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FiTrash2, FiAlertCircle } from 'react-icons/fi';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export default function CheckoutPage() {
     const { cartItems, cartTotal, clearCart, removeFromCart } = useCart();
     const router = useRouter();
+    const { trackAction } = useAnalytics();
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPhoneError, setShowPhoneError] = useState(false);
 
@@ -207,6 +210,8 @@ export default function CheckoutPage() {
             return;
         }
 
+        trackAction('CHECKOUT_START', { total: finalTotal, items: cartItems.length });
+
         const orderData = {
             contact: {
                 email: formData.get('email'),
@@ -238,7 +243,8 @@ export default function CheckoutPage() {
                 throw new Error(data.error || 'Checkout failed');
             }
 
-            // alert('Order Placed Successfully! Order ID: ' + data.orderId); // No longer needed
+            trackAction('PURCHASE', { orderId: data.orderId, total: finalTotal });
+
             clearCart();
             // Redirect to Thank You page with order number
             router.push(`/thank-you?orderId=${data.orderId}&orderNumber=${data.orderNumber}`);
