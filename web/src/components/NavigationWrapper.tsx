@@ -7,14 +7,15 @@ import Footer from '@/components/Footer/Footer';
 export default function NavigationWrapper({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const isLandingPage = pathname === '/';
+    const isAdmin = pathname?.startsWith('/admin');
 
     return (
         <>
-            {!isLandingPage && <Navbar />}
+            {!isLandingPage && !isAdmin && <Navbar />}
             <main style={{ minHeight: '100vh' }}>
                 {children}
             </main>
-            {!isLandingPage && <Footer />}
+            {!isLandingPage && !isAdmin && <Footer />}
         </>
     );
 }
