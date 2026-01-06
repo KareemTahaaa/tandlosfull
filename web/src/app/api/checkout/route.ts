@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-
 import { createShipment } from '@/lib/shipping';
+import { sendTelegramNotification } from '@/lib/telegram';
 
 const prisma = new PrismaClient();
 
@@ -12,7 +12,6 @@ export async function POST(request: Request) {
 
         // Start a transaction to ensure stock is updated atomically
         const order = await prisma.$transaction(async (tx) => {
-            // 1. Verify Stock for all items
             // 1. Verify Stock for all items
             for (const item of items) {
                 const stockEntry = await tx.productStock.findUnique({
@@ -61,7 +60,7 @@ export async function POST(request: Request) {
                     shippingCity: shipping.city,
                     shippingGovernorate: shipping.governorate,
                     // Items as JSON array
-                    items: (items as any[]).map((item) => ({
+                    items: (items as any[]).map((item: any) => ({
                         productId: item.id,
                         title: item.title,
                         price: item.price,
@@ -71,7 +70,6 @@ export async function POST(request: Request) {
                 }
             });
 
-            // 4. Decrement Stock
             // 4. Decrement Stock
             for (const item of items) {
                 await tx.productStock.update({
@@ -88,7 +86,24 @@ export async function POST(request: Request) {
             return newOrder;
         });
 
-        // 5. Create Shipment (Outside transaction to avoid blocking DB or rolling back on API error)
+        // 5. Send Telegram Notification (Async, don't block response)
+        const message = `
+📦 <b>New Order Received!</b>
+<b>Order ID:</b> #${order.orderNumber}
+<b>Total:</b> ${total.toLocaleString()} EGP
+
+<b>Customer:</b> ${shipping.firstName} ${shipping.lastName}
+<b>Phone:</b> ${contact.phone}
+<b>City:</b> ${shipping.city}
+
+<b>Items:</b>
+${(items as any[]).map((i: any) => `- ${i.title} (${i.size})`).join('\n')}
+        `.trim();
+
+        // Fire and forget - don't await so we don't slow down the response
+        sendTelegramNotification(message).catch(console.error);
+
+        // 6. Create Shipment (Outside transaction to avoid blocking DB or rolling back on API error)
         let shipment = null;
         let shipmentError = null;
 
