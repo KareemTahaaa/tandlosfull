@@ -93,10 +93,12 @@ model PromoCode {
 }
 
 
+
 model AnalyticsEvent {
-  id        String   @id @default(cuid())
-  type      String   // VISIT, ADD_TO_CART, CHECKOUT_START, PURCHASE
-  page      String?
-  details   Json?
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  eventType  String   // VISIT, ADD_TO_CART, CHECKOUT_START, PURCHASE
+  sessionId  String   // Track unique sessions
+  page       String?
+  details    Json?
+  createdAt  DateTime @default(now())
 }

@@ -28,6 +28,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <Link href="/admin/products" style={{ color: '#aaa', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px' }}>
                         Products
                     </Link>
+                    <Link href="/admin/promo-codes" style={{ color: '#aaa', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px' }}>
+                        Promo Codes
+                    </Link>
+                    <Link href="/admin/subscribers" style={{ color: '#aaa', textDecoration: 'none', padding: '0.5rem', borderRadius: '4px' }}>
+                        Subscribers
+                    </Link>
                 </nav>
 
                 <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
