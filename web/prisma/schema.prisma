@@ -83,13 +83,16 @@ model Order {
 
 
 model PromoCode {
-  id            String   @id @default(cuid())
-  code          String   @unique
-  discountType  String   @default("PERCENTAGE") // PERCENTAGE or FIXED
+  id            String    @id @default(cuid())
+  code          String    @unique
+  discountType  String    @default("PERCENTAGE") // PERCENTAGE or FIXED
   discountValue Int
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  isActive      Boolean   @default(true)
+  expiresAt     DateTime? // Optional expiration date
+  usageLimit    Int?      // Optional usage limit
+  usageCount    Int       @default(0) // Track how many times used
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 
