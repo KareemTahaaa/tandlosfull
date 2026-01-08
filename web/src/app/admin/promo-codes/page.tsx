@@ -22,9 +22,16 @@ export default function PromoCodesPage() {
         try {
             const res = await fetch('/api/admin/promo-codes');
             const data = await res.json();
-            setPromoCodes(data);
+            // Ensure data is an array before setting state
+            if (Array.isArray(data)) {
+                setPromoCodes(data);
+            } else {
+                console.error('Invalid response format:', data);
+                setPromoCodes([]);
+            }
         } catch (error) {
             console.error('Failed to fetch promo codes:', error);
+            setPromoCodes([]);
         } finally {
             setLoading(false);
         }

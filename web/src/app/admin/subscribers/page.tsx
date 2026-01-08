@@ -14,9 +14,16 @@ export default function SubscribersPage() {
         try {
             const res = await fetch('/api/admin/subscribers');
             const data = await res.json();
-            setSubscribers(data);
+            // Ensure data is an array before setting state
+            if (Array.isArray(data)) {
+                setSubscribers(data);
+            } else {
+                console.error('Invalid response format:', data);
+                setSubscribers([]);
+            }
         } catch (error) {
             console.error('Failed to fetch subscribers:', error);
+            setSubscribers([]);
         } finally {
             setLoading(false);
         }
