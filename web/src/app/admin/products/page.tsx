@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAdminNotification } from '@/context/AdminNotificationContext';
 
 type ProductStock = {
     id: string;
@@ -17,6 +18,7 @@ type Product = {
 };
 
 export default function AdminProducts() {
+    const { showNotification } = useAdminNotification();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -58,13 +60,13 @@ export default function AdminProducts() {
                 })
             });
             if (res.ok) {
-                alert('Saved!');
+                showNotification('Changes saved successfully!', 'success');
                 fetchProducts();
             } else {
-                alert('Failed to save');
+                showNotification('Failed to save changes', 'error');
             }
         } catch (e) {
-            alert('Error saving');
+            showNotification('Error saving changes', 'error');
         }
     };
 

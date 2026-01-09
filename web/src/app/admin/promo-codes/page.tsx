@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAdminNotification } from '@/context/AdminNotificationContext';
 
 export default function PromoCodesPage() {
+    const { showNotification } = useAdminNotification();
     const [promoCodes, setPromoCodes] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
@@ -50,13 +52,14 @@ export default function PromoCodesPage() {
                 setFormData({ code: '', discountType: 'PERCENTAGE', discountValue: '', expiresAt: '', usageLimit: '' });
                 setShowForm(false);
                 fetchPromoCodes();
+                showNotification('Promo code created successfully!', 'success');
             } else {
                 const error = await res.json();
-                alert(error.error || 'Failed to create promo code');
+                showNotification(error.error || 'Failed to create promo code', 'error');
             }
         } catch (error) {
             console.error('Error creating promo code:', error);
-            alert('Failed to create promo code');
+            showNotification('Failed to create promo code', 'error');
         }
     };
 
@@ -70,12 +73,13 @@ export default function PromoCodesPage() {
 
             if (res.ok) {
                 fetchPromoCodes();
+                showNotification('Promo code deleted successfully', 'success');
             } else {
-                alert('Failed to delete promo code');
+                showNotification('Failed to delete promo code', 'error');
             }
         } catch (error) {
             console.error('Error deleting promo code:', error);
-            alert('Failed to delete promo code');
+            showNotification('Failed to delete promo code', 'error');
         }
     };
 
