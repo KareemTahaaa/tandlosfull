@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProductGrid from '@/components/ProductGrid/ProductGrid';
 import ProductCard from '@/components/ProductCard/ProductCard';
+import LoadingAnimation from '@/components/LoadingAnimation';
 import styles from './ShopPage.module.css';
 
 interface Product {

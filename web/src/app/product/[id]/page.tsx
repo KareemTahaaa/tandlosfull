@@ -8,6 +8,7 @@ import { useNotification } from '@/context/NotificationContext';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { FiArrowLeft } from 'react-icons/fi';
 import dynamic from 'next/dynamic';
+import AddToCartAnimation from '@/components/AddToCartAnimation';
 import styles from './ProductPage.module.css';
 
 const VirtualTryOn = dynamic(
@@ -45,6 +46,7 @@ export default function ProductPage() {
     const [showTryOn, setShowTryOn] = useState(false);
     const [showSizeGuide, setShowSizeGuide] = useState(false);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
+    const [triggerCartAnimation, setTriggerCartAnimation] = useState(false);
 
     const id = params.id as string;
 
@@ -107,6 +109,8 @@ export default function ProductPage() {
             size: selectedSize
         });
 
+        // Trigger 3D animation
+        setTriggerCartAnimation(true);
         showNotification('Added to cart', 'success');
     };
 
@@ -315,6 +319,13 @@ export default function ProductPage() {
                 <RelatedProducts currentProductId={product.id} />
                 {/* <ReviewSection productId={product.id} productTitle={product.title} productImage={product.image} /> */}
             </div>
+
+            {/* 3D Add to Cart Animation */}
+            <AddToCartAnimation
+                trigger={triggerCartAnimation}
+                productImage={product.image}
+                onComplete={() => setTriggerCartAnimation(false)}
+            />
         </div>
     );
 }
