@@ -10,6 +10,7 @@ interface Product {
     title: string;
     price: number;
     image: string;
+    groupId?: string;
 }
 
 interface RelatedProductsProps {
@@ -19,6 +20,7 @@ interface RelatedProductsProps {
 export default function RelatedProducts({ currentProductId }: RelatedProductsProps) {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const [groupIdMap, setGroupIdMap] = useState<Map<string, string>>(new Map());
 
     useEffect(() => {
         async function fetchProducts() {
@@ -27,17 +29,24 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
                 if (res.ok) {
                     const allProducts: Product[] = await res.json();
 
+                    // Create a map of groupId -> first product ID in that group
+                    const groupMap = new Map<string, string>();
+                    allProducts.forEach(p => {
+                        if (p.groupId && !groupMap.has(p.groupId)) {
+                            groupMap.set(p.groupId, p.id);
+                        }
+                    });
+                    setGroupIdMap(groupMap);
+
                     // Filter out current product and verify duplicates via groupId
-                    // (Ensure we only show one variant per group, effectively "unique products")
                     const uniqueGroups = new Set<string>();
                     const others = allProducts.filter(p => {
                         if (p.id === currentProductId) return false;
 
                         // If it has a groupId, only allow one per group
-                        if ((p as any).groupId) { // Cast to any because Product interface below is partial
-                            const gid = (p as any).groupId;
-                            if (uniqueGroups.has(gid)) return false;
-                            uniqueGroups.add(gid);
+                        if (p.groupId) {
+                            if (uniqueGroups.has(p.groupId)) return false;
+                            uniqueGroups.add(p.groupId);
                             return true;
                         }
 
@@ -66,8 +75,10 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
             <h2 className={styles.heading}>You May Also Like</h2>
             <div className={styles.grid}>
                 {products.map(product => {
-                    // Use groupId if available to link to the main product, otherwise use product.id
-                    const linkId = (product as any).groupId || product.id;
+                    // Get the first product ID for this group, or use product.id if no group
+                    const linkId = product.groupId
+                        ? (groupIdMap.get(product.groupId) || product.id)
+                        : product.id;
 
                     return (
                         <Link href={`/product/${linkId}`} key={product.id} className={styles.card}>

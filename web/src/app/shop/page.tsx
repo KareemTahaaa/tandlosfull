@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import ProductGrid from '@/components/ProductGrid/ProductGrid';
 import ProductCard from '@/components/ProductCard/ProductCard';
-import LoadingAnimation from '@/components/LoadingAnimation';
 import styles from './ShopPage.module.css';
 
 interface Product {
@@ -48,11 +47,7 @@ export default function ShopPage() {
     }, []);
 
     if (loading) {
-        return (
-            <div className={`container ${styles.page}`}>
-                <LoadingAnimation />
-            </div>
-        );
+        return <div className="container section">Loading products...</div>;
     }
 
     // Filter products to show unique groups (preferring Black)
