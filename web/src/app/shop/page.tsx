@@ -48,7 +48,11 @@ export default function ShopPage() {
     }, []);
 
     if (loading) {
-        return <div className="container section">Loading products...</div>;
+        return (
+            <div className={`container ${styles.page}`}>
+                <LoadingAnimation />
+            </div>
+        );
     }
 
     // Filter products to show unique groups (preferring Black)

@@ -65,22 +65,27 @@ export default function RelatedProducts({ currentProductId }: RelatedProductsPro
         <section className={styles.relatedSection}>
             <h2 className={styles.heading}>You May Also Like</h2>
             <div className={styles.grid}>
-                {products.map(product => (
-                    <Link href={`/product/${product.id}`} key={product.id} className={styles.card}>
-                        <div className={styles.imageWrapper}>
-                            <Image
-                                src={product.image}
-                                alt={product.title}
-                                fill
-                                className={styles.image}
-                            />
-                        </div>
-                        <div className={styles.info}>
-                            <h3 className={styles.title}>{product.title}</h3>
-                            <p className={styles.price}>{product.price.toLocaleString()} EGP</p>
-                        </div>
-                    </Link>
-                ))}
+                {products.map(product => {
+                    // Use groupId if available to link to the main product, otherwise use product.id
+                    const linkId = (product as any).groupId || product.id;
+
+                    return (
+                        <Link href={`/product/${linkId}`} key={product.id} className={styles.card}>
+                            <div className={styles.imageWrapper}>
+                                <Image
+                                    src={product.image}
+                                    alt={product.title}
+                                    fill
+                                    className={styles.image}
+                                />
+                            </div>
+                            <div className={styles.info}>
+                                <h3 className={styles.title}>{product.title}</h3>
+                                <p className={styles.price}>{product.price.toLocaleString()} EGP</p>
+                            </div>
+                        </Link>
+                    );
+                })}
             </div>
         </section>
     );
